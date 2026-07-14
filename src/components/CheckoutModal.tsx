@@ -40,7 +40,7 @@ export default function CheckoutModal() {
     if (paymentMethod === 'wallet' && !transferImage) return;
     const id = 'ORD-' + Date.now().toString(36).toUpperCase();
     setOrderId(id);
-    addOrder({ id, items: [...cart], total, status: 'ordered', date: new Date().toLocaleDateString('ar-EG'), paymentMethod: paymentMethod === 'cod' ? (lang === 'ar' ? 'الدفع عند الاستلام' : 'Cash on Delivery') : (lang === 'ar' ? 'محفظة إلكترونية' : 'E-Wallet') });
+    addOrder({ id, items: [...cart], total, status: 'ordered', date: new Date().toLocaleDateString('ar-EG'), paymentMethod: paymentMethod === 'cod' ? (lang === 'ar' ? 'الدفع عند الاستلام' : 'Cash on Delivery') : (lang === 'ar' ? 'محفظة إلكترونية' : 'E-Wallet'), governorate, address });
     clearCart(); clearDiscount(); setOrderPlaced(true);
   };
 

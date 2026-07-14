@@ -37,6 +37,8 @@ export interface Order {
   status: 'ordered' | 'confirmed' | 'shipped' | 'delivered';
   date: string;
   paymentMethod: string;
+  governorate?: string;
+  address?: string;
 }
 
 export interface User {
@@ -89,6 +91,12 @@ interface StoreState {
   showCart: boolean;
   setShowCart: (show: boolean) => void;
 }
+
+// رابط الـ Google Apps Script بتاع شيت أوردرات المحافظات
+const GOVERNORATES_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxo5c8MmQFM3qcpdt-268XqTfXQ2zKTW0wHq77AyFLesr2clj2G1AXzhfxw2-EVOszm0Q/exec';
+
+// المحافظات اللي مش هتتبعت للشيت
+const EXCLUDED_GOVERNORATES = ['القاهرة', 'الجيزة'];
 
 export const useStore = create<StoreState>()(
   persist(
@@ -180,6 +188,31 @@ export const useStore = create<StoreState>()(
           await supabase.from('order_items').insert(items);
         } catch (err) {
           console.error('Error saving order:', err);
+        }
+
+        // بعت الأوردر لشيت المحافظات لو الأوردر من محافظة غير القاهرة والجيزة
+        try {
+          if (order.governorate && !EXCLUDED_GOVERNORATES.includes(order.governorate)) {
+            const productsList = order.items
+              .map(item => `${item.product.name} x${item.quantity}`)
+              .join(', ');
+
+            await fetch(GOVERNORATES_SHEET_URL, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'text/plain' },
+              body: JSON.stringify({
+                name: user.name,
+                phone: user.phone,
+                governorate: order.governorate,
+                address: order.address || '',
+                products: productsList,
+                total: order.total,
+              }),
+            });
+          }
+        } catch (err) {
+          console.error('Error sending order to Google Sheet:', err);
         }
       },
 
