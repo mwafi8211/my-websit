@@ -93,7 +93,7 @@ interface StoreState {
 }
 
 // رابط الـ Google Apps Script بتاع شيت أوردرات المحافظات
-const GOVERNORATES_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxo5c8MmQFM3qcpdt-268XqTfXQ2zKTW0wHq77AyFLesr2clj2G1AXzhfxw2-EVOszm0Q/exec';
+const GOVERNORATES_SHEET_URL = 'https://script.google.com/macros/s/AKfycbysEN5oTPu3cN28Qrn3LXqM31X0Qeu9mI3i5LCCI0KDw5Tv9CnkdxVvbBUBeD_1JXSBOQ/exec';
 
 // المحافظات اللي مش هتتبعت للشيت
 const EXCLUDED_GOVERNORATES = ['القاهرة', 'الجيزة'];
