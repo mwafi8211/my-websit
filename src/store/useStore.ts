@@ -94,7 +94,34 @@ interface StoreState {
 
 // رابط الـ Google Apps Script بتاع شيت أوردرات المحافظات
 const GOVERNORATES_SHEET_URL = 'https://script.google.com/macros/s/AKfycbysEN5oTPu3cN28Qrn3LXqM31X0Qeu9mI3i5LCCI0KDw5Tv9CnkdxVvbBUBeD_1JXSBOQ/exec';
+// أرقام استقبال إشعارات الواتساب (CallMeBot) — لكل رقم الـ API Key بتاعه
+const WHATSAPP_NOTIFY_NUMBERS = [
+  { phone: '+201124244681', apikey: '4790221' },
+  { phone: '+201154243937', apikey: '5808363' },
+];
 
+async function sendWhatsappNotification(order: Order, userName: string, userPhone: string) {
+  const productsList = order.items
+    .map(item => `${item.product.name} x${item.quantity}`)
+    .join(', ');
+
+  const message = `طلب جديد ${order.id}
+العميل: ${userName}
+تليفون: ${userPhone}
+المحافظة: ${order.governorate || '-'}
+العنوان: ${order.address || '-'}
+المنتجات: ${productsList}
+الإجمالي: ${order.total} ج`;
+
+  for (const recipient of WHATSAPP_NOTIFY_NUMBERS) {
+    try {
+      const url = `https://api.callmebot.com/whatsapp.php?phone=${recipient.phone}&text=${encodeURIComponent(message)}&apikey=${recipient.apikey}`;
+      await fetch(url);
+    } catch (err) {
+      console.error('Error sending WhatsApp notification:', err);
+    }
+  }
+}
 // المحافظات اللي مش هتتبعت للشيت
 const EXCLUDED_GOVERNORATES = ['القاهرة', 'الجيزة'];
 
@@ -185,6 +212,7 @@ export const useStore = create<StoreState>()(
           }));
 
           await supabase.from('order_items').insert(items);
+          await sendWhatsappNotification(order, user.name, user.phone);
         } catch (err) {
           console.error('Error saving order:', err);
         }
