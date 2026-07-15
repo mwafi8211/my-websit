@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Package, CheckCircle, Truck, MapPin, Clock } from 'lucide-react';
 import { useStore } from '../store/useStore';
+import { supabase } from '../lib/supabase';
 
 const statusSteps = [
   { key: 'ordered', labelAr: 'تم الطلب', labelEn: 'Ordered', icon: Clock },
@@ -11,6 +13,27 @@ const statusSteps = [
 
 export default function OrderTracking() {
   const { lang, orders, showOrderTracking, setShowOrderTracking } = useStore();
+  const [liveStatuses, setLiveStatuses] = useState<Record<string, string>>({});
+
+useEffect(() => {
+  if (!showOrderTracking || orders.length === 0) return;
+
+  const fetchStatuses = async () => {
+    const ids = orders.map(o => o.id);
+    const { data } = await supabase
+      .from('orders')
+      .select('id, status')
+      .in('id', ids);
+
+    if (data) {
+      const statusMap: Record<string, string> = {};
+      data.forEach(row => { statusMap[row.id] = row.status; });
+      setLiveStatuses(statusMap);
+    }
+  };
+
+  fetchStatuses();
+}, [showOrderTracking, orders]);
   const getStatusIndex = (status: string) => statusSteps.findIndex(s => s.key === status);
 
   return (
@@ -30,7 +53,8 @@ export default function OrderTracking() {
               ) : (
                 <div className="space-y-6">
                   {orders.map(order => {
-                    const currentIndex = getStatusIndex(order.status);
+                    const currentStatus = liveStatuses[order.id] || order.status;
+                    const currentIndex = getStatusIndex(currentStatus);
                     return (
                       <motion.div key={order.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-midnight-light/30 rounded-xl p-4 sm:p-6 border border-velvet/10">
                         <div className="flex items-center justify-between mb-4">
