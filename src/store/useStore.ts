@@ -172,7 +172,6 @@ export const useStore = create<StoreState>()(
             total: order.total,
             status: order.status,
             payment_method: order.paymentMethod,
-            date: new Date().toISOString(),
           });
 
           // حفظ تفاصيل الأوردر
