@@ -73,7 +73,13 @@ export default function CheckoutModal() {
                   </motion.div>
                   <h4 className="text-[clamp(1rem,3vw,1.5rem)] font-bold text-soft-white mb-2">{lang === 'ar' ? 'شكراً لطلبك!' : 'Thank you!'}</h4>
                   <p className="text-soft-white/50 text-[clamp(0.75rem,2vw,0.9rem)] mb-2">{lang === 'ar' ? 'رقم الطلب' : 'Order ID'}: <span className="text-rose-gold font-bold">{orderId}</span></p>
-                  <p className="text-soft-white/60 text-[clamp(0.7rem,2vw,0.85rem)] bg-midnight-light/30 rounded-xl p-4 mt-4">{lang === 'ar' ? `مرحباً ${user?.name}! طلبك في الطريق 💜` : `Hello ${user?.name}! Your order is on the way 💜`}</p>
+                  <p className="text-soft-white/60 text-[clamp(0.7rem,2vw,0.85rem)] bg-midnight-light/30 rounded-xl p-4 mt-4">{lang === 'ar' ? `مرحباً ${user?.name}تم تأكيد الأوردر يا فندم 🔥
+مدة التوصيل من 3 لـ 4 أيام عمل 🚚💗
+
+وسيتم التواصل مع حضرتك بمكالمة تليفون قبل الوصول للتسليم 📞
+
+الأوردر بيتم توصيله مغلف بشكل كامل لضمان الخصوصية التامة ✨
+ومتاح المعاينة قبل الاستلام، وفي حالة الاسترجاع يتم دفع مصاريف الشحن فقط للمندوب.` : `Hello ${user?.name}! Your order is on the way 💜`}</p>
                 </motion.div>
               ) : (
                 <div className="space-y-[clamp(0.75rem,2.5vw,1.25rem)]">
