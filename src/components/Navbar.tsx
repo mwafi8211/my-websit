@@ -55,38 +55,38 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="flex items-center gap-[clamp(0.2rem,1vw,0.5rem)]">
-            <button onClick={() => setShowSearch(!showSearch)} className="p-[clamp(0.5rem,1.4vw,0.7rem)] text-soft-white/70 hover:text-rose-gold transition-colors">
-              <Search className="w-[clamp(1.2rem,3vw,1.4rem)] h-[clamp(1.2rem,3vw,1.4rem)]" />
+          <div className="flex items-center gap-[clamp(0.3rem,1.2vw,0.6rem)]">
+            <button onClick={() => setShowSearch(!showSearch)} className="p-[clamp(0.8rem,2vw,1rem)] text-soft-white/70 hover:text-rose-gold transition-colors">
+              <Search className="w-[clamp(1.5rem,3.8vw,1.7rem)] h-[clamp(1.5rem,3.8vw,1.7rem)]" />
             </button>
-            <button onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')} className="p-[clamp(0.5rem,1.4vw,0.7rem)] text-soft-white/70 hover:text-rose-gold transition-colors">
-              <Globe className="w-[clamp(1.2rem,3vw,1.4rem)] h-[clamp(1.2rem,3vw,1.4rem)]" />
+            <button onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')} className="p-[clamp(0.8rem,2vw,1rem)] text-soft-white/70 hover:text-rose-gold transition-colors">
+              <Globe className="w-[clamp(1.5rem,3.8vw,1.7rem)] h-[clamp(1.5rem,3.8vw,1.7rem)]" />
             </button>
-            <button onClick={() => setActivePage('wishlist')} className="p-[clamp(0.5rem,1.4vw,0.7rem)] text-soft-white/70 hover:text-rose-pink transition-colors relative">
-              <Heart className="w-[clamp(1.2rem,3vw,1.4rem)] h-[clamp(1.2rem,3vw,1.4rem)]" fill={wishlist.length > 0 ? '#f0a6ca' : 'none'} />
+            <button onClick={() => setActivePage('wishlist')} className="p-[clamp(0.8rem,2vw,1rem)] text-soft-white/70 hover:text-rose-pink transition-colors relative">
+              <Heart className="w-[clamp(1.5rem,3.8vw,1.7rem)] h-[clamp(1.5rem,3.8vw,1.7rem)]" fill={wishlist.length > 0 ? '#f0a6ca' : 'none'} />
               {wishlist.length > 0 && (
-                <span className="absolute top-0 left-0 w-[clamp(0.9rem,2.3vw,1.1rem)] h-[clamp(0.9rem,2.3vw,1.1rem)] bg-rose-pink text-midnight text-[clamp(0.55rem,1.3vw,0.7rem)] font-bold rounded-full flex items-center justify-center">
+                <span className="absolute top-0 left-0 w-[clamp(1.2rem,2.8vw,1.4rem)] h-[clamp(1.2rem,2.8vw,1.4rem)] bg-rose-pink text-midnight text-[clamp(0.65rem,1.5vw,0.8rem)] font-bold rounded-full flex items-center justify-center">
                   {wishlist.length}
                 </span>
               )}
             </button>
-            <button onClick={() => setShowOrderTracking(true)} className="p-[clamp(0.5rem,1.4vw,0.7rem)] text-soft-white/70 hover:text-rose-gold transition-colors hidden min-[540px]:block">
-              <Package className="w-[clamp(1.2rem,3vw,1.4rem)] h-[clamp(1.2rem,3vw,1.4rem)]" />
+            <button onClick={() => setShowOrderTracking(true)} className="p-[clamp(0.8rem,2vw,1rem)] text-soft-white/70 hover:text-rose-gold transition-colors hidden min-[540px]:block">
+              <Package className="w-[clamp(1.5rem,3.8vw,1.7rem)] h-[clamp(1.5rem,3.8vw,1.7rem)]" />
             </button>
-            <button onClick={() => setShowCart(!showCart)} className="p-[clamp(0.5rem,1.4vw,0.7rem)] text-soft-white/70 hover:text-rose-gold transition-colors relative">
-              <ShoppingCart className="w-[clamp(1.2rem,3vw,1.4rem)] h-[clamp(1.2rem,3vw,1.4rem)]" />
+            <button onClick={() => setShowCart(!showCart)} className="p-[clamp(0.8rem,2vw,1rem)] text-soft-white/70 hover:text-rose-gold transition-colors relative">
+              <ShoppingCart className="w-[clamp(1.5rem,3.8vw,1.7rem)] h-[clamp(1.5rem,3.8vw,1.7rem)]" />
               {totalItems > 0 && (
                 <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }}
-                  className="absolute top-0 left-0 w-[clamp(0.9rem,2.3vw,1.1rem)] h-[clamp(0.9rem,2.3vw,1.1rem)] bg-velvet text-white text-[clamp(0.55rem,1.3vw,0.7rem)] font-bold rounded-full flex items-center justify-center">
+                  className="absolute top-0 left-0 w-[clamp(1.2rem,2.8vw,1.4rem)] h-[clamp(1.2rem,2.8vw,1.4rem)] bg-velvet text-white text-[clamp(0.65rem,1.5vw,0.8rem)] font-bold rounded-full flex items-center justify-center">
                   {totalItems}
                 </motion.span>
               )}
             </button>
-            <button onClick={() => user ? setActivePage('profile') : setShowLogin(true)} className="p-[clamp(0.5rem,1.4vw,0.7rem)] text-soft-white/70 hover:text-rose-gold transition-colors">
-              <User className="w-[clamp(1.2rem,3vw,1.4rem)] h-[clamp(1.2rem,3vw,1.4rem)]" />
+            <button onClick={() => user ? setActivePage('profile') : setShowLogin(true)} className="p-[clamp(0.8rem,2vw,1rem)] text-soft-white/70 hover:text-rose-gold transition-colors">
+              <User className="w-[clamp(1.5rem,3.8vw,1.7rem)] h-[clamp(1.5rem,3.8vw,1.7rem)]" />
             </button>
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-[clamp(0.5rem,1.4vw,0.7rem)] text-soft-white/70 min-[640px]:hidden">
-              {mobileMenuOpen ? <X className="w-[clamp(1.3rem,3.5vw,1.6rem)] h-[clamp(1.3rem,3.5vw,1.6rem)]" /> : <Menu className="w-[clamp(1.3rem,3.5vw,1.6rem)] h-[clamp(1.3rem,3.5vw,1.6rem)]" />}
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-[clamp(0.8rem,2vw,1rem)] text-soft-white/70 min-[640px]:hidden">
+              {mobileMenuOpen ? <X className="w-[clamp(1.6rem,4.2vw,1.9rem)] h-[clamp(1.6rem,4.2vw,1.9rem)]" /> : <Menu className="w-[clamp(1.6rem,4.2vw,1.9rem)] h-[clamp(1.6rem,4.2vw,1.9rem)]" />}
             </button>
           </div>
         </div>
