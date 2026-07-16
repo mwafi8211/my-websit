@@ -24,6 +24,7 @@ export default function CheckoutModal() {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderId, setOrderId] = useState('');
   const [transferImage, setTransferImage] = useState<string | null>(null);
+  const [transferImageFile, setTransferImageFile] = useState<File | null>(null);
   const [copied, setCopied] = useState(false);
 
   const subtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
@@ -33,18 +34,21 @@ export default function CheckoutModal() {
 
   const handleApplyCoupon = () => { const success = applyDiscount(couponInput); if (!success) setCouponError(lang === 'ar' ? 'كود خصم غير صالح' : 'Invalid discount code'); else setCouponError(''); };
   const handleCopyNumber = () => { navigator.clipboard.writeText(settings.wallet_number); setCopied(true); setTimeout(() => setCopied(false), 2000); };
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => { const file = e.target.files?.[0]; if (file) { const reader = new FileReader(); reader.onloadend = () => setTransferImage(reader.result as string); reader.readAsDataURL(file); } };
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => { const file = e.target.files?.[0]; if (file) { setTransferImageFile(file); const reader = new FileReader(); reader.onloadend = () => setTransferImage(reader.result as string); reader.readAsDataURL(file); } };
 
   const handlePlaceOrder = () => {
     if (!address || !governorate) return;
     if (paymentMethod === 'wallet' && !transferImage) return;
     const id = 'ORD-' + Date.now().toString(36).toUpperCase();
     setOrderId(id);
-    addOrder({ id, items: [...cart], total, status: 'ordered', date: new Date().toLocaleDateString('ar-EG'), paymentMethod: paymentMethod === 'cod' ? (lang === 'ar' ? 'الدفع عند الاستلام' : 'Cash on Delivery') : (lang === 'ar' ? 'محفظة إلكترونية' : 'E-Wallet'), governorate, address });
+    addOrder(
+      { id, items: [...cart], total, status: 'ordered', date: new Date().toLocaleDateString('ar-EG'), paymentMethod: paymentMethod === 'cod' ? (lang === 'ar' ? 'الدفع عند الاستلام' : 'Cash on Delivery') : (lang === 'ar' ? 'محفظة إلكترونية' : 'E-Wallet'), governorate, address },
+      paymentMethod === 'wallet' ? transferImageFile ?? undefined : undefined
+    );
     clearCart(); clearDiscount(); setOrderPlaced(true);
   };
 
-  const handleClose = () => { setShowCheckout(false); setOrderPlaced(false); setOrderId(''); setAddress(''); setGovernorate(''); setCouponInput(''); setCouponError(''); setTransferImage(null); };
+  const handleClose = () => { setShowCheckout(false); setOrderPlaced(false); setOrderId(''); setAddress(''); setGovernorate(''); setCouponInput(''); setCouponError(''); setTransferImage(null); setTransferImageFile(null); };
   const canPlaceOrder = address && governorate && (paymentMethod === 'cod' || (paymentMethod === 'wallet' && transferImage));
 
   return (
@@ -73,7 +77,7 @@ export default function CheckoutModal() {
                   </motion.div>
                   <h4 className="text-[clamp(1rem,3vw,1.5rem)] font-bold text-soft-white mb-2">{lang === 'ar' ? 'شكراً لطلبك!' : 'Thank you!'}</h4>
                   <p className="text-soft-white/50 text-[clamp(0.75rem,2vw,0.9rem)] mb-2">{lang === 'ar' ? 'رقم الطلب' : 'Order ID'}: <span className="text-rose-gold font-bold">{orderId}</span></p>
-                  <p className="text-soft-white/60 text-[clamp(0.7rem,2vw,0.85rem)] bg-midnight-light/30 rounded-xl p-4 mt-4">{lang === 'ar' ? `مرحباً ${user?.name}تم تأكيد الأوردر يا فندم 🔥
+                  <p className="text-soft-white/60 text-[clamp(0.7rem,2vw,0.85rem)] bg-midnight-light/30 rounded-xl p-4 mt-4">{lang === 'ar' ? `مرحباً ${user?.name}، تم تأكيد الأوردر يا فندم 🔥
 مدة التوصيل من 3 لـ 4 أيام عمل 🚚💗
 
 وسيتم التواصل مع حضرتك بمكالمة تليفون قبل الوصول للتسليم 📞
@@ -127,7 +131,7 @@ export default function CheckoutModal() {
                         <label className="block cursor-pointer">
                           <div className={`border-2 border-dashed rounded-xl p-6 text-center transition-all ${transferImage ? 'border-green-500/50' : 'border-velvet/30'}`}>
                             {transferImage ? (
-                              <div><img src={transferImage} alt="" className="max-h-24 mx-auto rounded-lg" /><p className="text-xs text-green-400 mt-2">✅ {lang === 'ar' ? 'تم رفع الصورة' : 'Uploaded'}</p></div>
+                              <div><img src={transferImage} alt="" className="max-h-24 mx-auto rounded-lg" /><p className="text-xs text-green-400 mt-2">✅ {lang === 'ar' ? 'الصورة اترفعت هنراجع عليها ونأكد الأوردر' : 'Uploaded'}</p></div>
                             ) : (
                               <div><Upload className="mx-auto mb-2 w-6 h-6 text-velvet-light" /><p className="text-sm text-soft-white/60">{lang === 'ar' ? 'ارفع صورة التحويل' : 'Upload screenshot'}</p></div>
                             )}

@@ -30,15 +30,17 @@ export interface WishlistItem {
   product: Product;
 }
 
+// الجديد
 export interface Order {
   id: string;
   items: CartItem[];
   total: number;
-  status: 'ordered' | 'confirmed' | 'shipped' | 'delivered';
+  status: 'pending_review' | 'ordered' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
   date: string;
   paymentMethod: string;
   governorate?: string;
   address?: string;
+  paymentProofUrl?: string;
 }
 
 export interface User {
@@ -68,7 +70,7 @@ interface StoreState {
   removeFromWishlist: (productId: number) => void;
   isInWishlist: (productId: number) => boolean;
   orders: Order[];
-  addOrder: (order: Order) => void;
+  addOrder: (order: Order, proofFile?: File) => void;
   discountCode: string;
   discountPercentage: number;
   applyDiscount: (code: string) => Promise<boolean>;
@@ -135,8 +137,33 @@ export const useStore = create<StoreState>()(
       isInWishlist: (productId) => get().wishlist.some(item => item.product.id === productId),
 
       orders: [],
-      addOrder: async (order) => {
-        set({ orders: [...get().orders, order] });
+      addOrder: async (order, proofFile) => {
+        let paymentProofUrl: string | undefined;
+        let finalStatus = order.status;
+
+        // لو فيه صورة إثبات تحويل، ارفعها على Storage وخلي الطلب "بانتظار المراجعة"
+        if (proofFile) {
+          try {
+            const fileExt = proofFile.name.split('.').pop();
+            const filePath = `${order.id}.${fileExt}`;
+            const { error: uploadError } = await supabase.storage
+              .from('payment-proofs')
+              .upload(filePath, proofFile);
+
+            if (!uploadError) {
+              const { data: publicUrlData } = supabase.storage
+                .from('payment-proofs')
+                .getPublicUrl(filePath);
+              paymentProofUrl = publicUrlData.publicUrl;
+              finalStatus = 'pending_review';
+            }
+          } catch (err) {
+            console.error('Error uploading payment proof:', err);
+          }
+        }
+
+        const finalOrder = { ...order, status: finalStatus, paymentProofUrl };
+        set({ orders: [...get().orders, finalOrder] });
 
         // حفظ الأوردر في Supabase
         const user = get().user;
@@ -167,8 +194,9 @@ export const useStore = create<StoreState>()(
             id: order.id,
             user_id: userId,
             total: order.total,
-            status: order.status,
+            status: finalStatus,
             payment_method: order.paymentMethod,
+            payment_proof_url: paymentProofUrl || null,
           });
 
           // حفظ تفاصيل الأوردر
