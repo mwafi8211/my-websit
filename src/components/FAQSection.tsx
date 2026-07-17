@@ -25,7 +25,7 @@ export default function FAQSection() {
               transition={{ delay: index * 0.05 }} className="bg-midnight-light/35 rounded-2xl border border-velvet/10 overflow-hidden">
               <button onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full flex items-center justify-between p-4 text-right gap-3">
-                <span className="text-[1.05rem] md:text-[1.1rem] font-semibold text-soft-white flex-1 text-right leading-relaxed">{faq.answer}</span>
+                <span className="text-[1.05rem] md:text-[1.1rem] font-semibold text-soft-white flex-1 text-right leading-relaxed">{faq.question}</span>
                 <motion.span animate={{ rotate: openIndex === index ? 180 : 0 }} className="flex-shrink-0 w-7 h-7 rounded-full bg-velvet/15 flex items-center justify-center">
                   <ChevronDown className="w-4 h-4 text-velvet-light" />
                 </motion.span>
