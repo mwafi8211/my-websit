@@ -38,6 +38,7 @@ export const useProducts = () => {
         discount: p.discount,
         rating: p.rating,
         stock: p.stock,
+        free_shipping: p.free_shipping,
       }));
 
       setProducts(mapped);
