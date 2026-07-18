@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Heart, Star } from 'lucide-react';
+import { ShoppingCart, Heart, Star, Truck } from 'lucide-react';
 import { useStore, Product } from '../store/useStore';
 
 interface Props { product: Product; index?: number; }
@@ -35,6 +35,15 @@ export default function ProductCard({ product, index = 0 }: Props) {
           className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
           onLoad={() => setImageLoaded(true)} loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-t from-midnight-dark/80 via-transparent to-transparent" />
+
+        {product.free_shipping && (
+          <div className="absolute -top-1 -left-9 z-20 w-32 overflow-hidden pointer-events-none">
+            <div className="-rotate-45 origin-center bg-gradient-to-r from-gold via-rose-gold to-gold bg-[length:200%_100%] text-midnight-dark text-[0.62rem] md:text-[0.66rem] font-extrabold tracking-tight py-[3px] flex items-center justify-center gap-1 shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
+              <Truck className="w-[0.7rem] h-[0.7rem]" strokeWidth={2.5} />
+              <span>{lang === 'ar' ? 'شحن مجاني' : 'Free Ship'}</span>
+            </div>
+          </div>
+        )}
 
         <div className="absolute top-3 right-3 flex flex-col gap-1.5 z-10">
           {product.isNew && <span className="bg-velvet text-white text-[0.7rem] md:text-[0.78rem] px-2.5 py-1 rounded-full font-bold">{lang === 'ar' ? 'جديد' : 'NEW'}</span>}
