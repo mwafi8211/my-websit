@@ -37,9 +37,9 @@ export default function ProductCard({ product, index = 0 }: Props) {
         <div className="absolute inset-0 bg-gradient-to-t from-midnight-dark/80 via-transparent to-transparent" />
 
         {product.free_shipping && (
-          <div className="absolute top-0 left-0 z-20 w-28 h-28 overflow-hidden pointer-events-none">
-            <div className="absolute top-[22px] -left-[38px] w-[170px] rotate-[-45deg] origin-center bg-gradient-to-r from-gold via-rose-gold to-gold text-midnight-dark text-[0.72rem] md:text-[0.78rem] font-extrabold tracking-tight py-[6px] flex items-center justify-center gap-1.5 shadow-[0_3px_10px_rgba(0,0,0,0.4)]">
-              <Truck className="w-[0.85rem] h-[0.85rem]" strokeWidth={2.75} />
+          <div className="absolute top-0 left-0 z-20 w-36 h-36 overflow-hidden pointer-events-none">
+            <div className="absolute top-[30px] -left-[42px] w-[190px] rotate-[-45deg] origin-center bg-gradient-to-r from-gold via-rose-gold to-gold text-midnight-dark text-[0.68rem] md:text-[0.74rem] font-extrabold tracking-tight py-[6px] flex items-center justify-center gap-1.5 shadow-[0_3px_10px_rgba(0,0,0,0.4)] whitespace-nowrap">
+              <Truck className="w-[0.8rem] h-[0.8rem] flex-shrink-0" strokeWidth={2.75} />
               <span>{lang === 'ar' ? 'شحن مجاني' : 'Free Ship'}</span>
             </div>
           </div>
@@ -51,7 +51,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
         </div>
 
         <button onClick={handleWishlist}
-          className="absolute top-3 left-3 w-10 h-10 rounded-full glass-effect flex items-center justify-center hover:bg-rose-pink/20 transition-colors z-10 active:scale-90">
+          className="absolute top-3 left-3 w-10 h-10 rounded-full glass-effect flex items-center justify-center hover:bg-rose-pink/20 transition-colors z-30 active:scale-90">
           <Heart className="w-5 h-5 text-soft-white" fill={inWishlist ? '#f0a6ca' : 'none'} />
         </button>
 
