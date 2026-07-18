@@ -82,7 +82,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
         <div className="flex items-baseline gap-1">
           <span className="text-[1.12rem] md:text-[1.22rem] font-extrabold text-rose-gold">{product.price}</span>
           <span className="text-[0.72rem] md:text-[0.78rem] text-rose-gold/70">{lang === 'ar' ? 'ج.م' : 'EGP'}</span>
-          {product.oldPrice && <span className="text-[0.75rem] md:text-[0.82rem] text-soft-white/30 line-through mr-1.5">{product.oldPrice}</span>}
+          {product.oldPrice && <span className="text-[1.12rem] md:text-[1.22rem] font-bold text-soft-white/35 line-through mr-1.5">{product.oldPrice}</span>}
         </div>
       </div>
     </motion.div>
