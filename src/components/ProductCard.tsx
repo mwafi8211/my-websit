@@ -37,9 +37,9 @@ export default function ProductCard({ product, index = 0 }: Props) {
         <div className="absolute inset-0 bg-gradient-to-t from-midnight-dark/80 via-transparent to-transparent" />
 
         {product.free_shipping && (
-          <div className="absolute -top-1 -left-9 z-20 w-32 overflow-hidden pointer-events-none">
-            <div className="-rotate-45 origin-center bg-gradient-to-r from-gold via-rose-gold to-gold bg-[length:200%_100%] text-midnight-dark text-[0.62rem] md:text-[0.66rem] font-extrabold tracking-tight py-[3px] flex items-center justify-center gap-1 shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
-              <Truck className="w-[0.7rem] h-[0.7rem]" strokeWidth={2.5} />
+          <div className="absolute top-0 left-0 z-20 w-28 h-28 overflow-hidden pointer-events-none">
+            <div className="absolute top-[22px] -left-[38px] w-[170px] rotate-[-45deg] origin-center bg-gradient-to-r from-gold via-rose-gold to-gold text-midnight-dark text-[0.72rem] md:text-[0.78rem] font-extrabold tracking-tight py-[6px] flex items-center justify-center gap-1.5 shadow-[0_3px_10px_rgba(0,0,0,0.4)]">
+              <Truck className="w-[0.85rem] h-[0.85rem]" strokeWidth={2.75} />
               <span>{lang === 'ar' ? 'شحن مجاني' : 'Free Ship'}</span>
             </div>
           </div>
