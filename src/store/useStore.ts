@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 
 export interface Product {
   id: number;
+  free_shipping?: boolean;
   name: string;
   nameEn: string;
   price: number;

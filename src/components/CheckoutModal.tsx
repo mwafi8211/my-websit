@@ -29,7 +29,8 @@ export default function CheckoutModal() {
 
   const subtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
   const discountAmount = (subtotal * discountPercentage) / 100;
-  const shipping = subtotal > settings.free_shipping_threshold ? 0 : settings.default_shipping_cost;
+  const hasFreeShippingItem = cart.some(item => item.product.free_shipping);
+  const shipping = (hasFreeShippingItem || subtotal > settings.free_shipping_threshold) ? 0 : settings.default_shipping_cost;
   const total = subtotal - discountAmount + shipping;
 
   const handleApplyCoupon = () => { const success = applyDiscount(couponInput); if (!success) setCouponError(lang === 'ar' ? 'كود خصم غير صالح' : 'Invalid discount code'); else setCouponError(''); };
