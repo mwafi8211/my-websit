@@ -72,7 +72,7 @@ export default function App() {
       <FlyingHearts />
 
       <motion.a
-        href="https://wa.me/201012345678" target="_blank" rel="noopener noreferrer"
+        href="https://wa.me/201109828191" target="_blank" rel="noopener noreferrer"
         className="fixed bottom-[clamp(0.6rem,2vw,1.5rem)] left-[clamp(0.6rem,2vw,1.5rem)] z-40 w-[clamp(2.8rem,8vw,3.5rem)] h-[clamp(2.8rem,8vw,3.5rem)] bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-600/30 hover:bg-green-500 transition-colors"
         whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
         animate={{ y: [0, -5, 0] }} transition={{ duration: 2, repeat: Infinity }}>
