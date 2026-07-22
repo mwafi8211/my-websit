@@ -332,8 +332,8 @@ export const faqs = [
   {
     question: 'كم يستغرق التوصيل؟',
     questionEn: 'How long does delivery take?',
-    answer: 'التوصيل خلال 24 إلى 48 ساعة داخل القاهرة والجيزة، ومن 3 إلى 5 أيام عمل للمحافظات الأخرى.',
-    answerEn: 'Delivery takes 24-48 hours within Cairo and Giza, and 3-5 business days for other governorates.',
+    answer: 'التوصيل خلال 48 إلى 72 ساعة داخل القاهرة والجيزة، ومن 3 إلى 4 أيام عمل للمحافظات الأخرى.',
+    answerEn: 'Delivery takes 24-48 hours within Cairo and Giza, and 3-4 business days for other governorates.',
   },
   {
     question: 'هل المنتجات أصلية؟',

@@ -46,10 +46,10 @@ export default function ProductDetail() {
                   <div className="aspect-square relative overflow-hidden">
                     <AnimatePresence mode="wait">
                       <motion.img key={currentImage} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                        src={selectedProduct.images[currentImage]} alt={lang === 'ar' ? selectedProduct.name : selectedProduct.nameEn}
+                        src={selectedProduct.images?.[currentImage] || selectedProduct.image} alt={lang === 'ar' ? selectedProduct.name : selectedProduct.nameEn}
                         className="w-full h-full object-cover" />
                     </AnimatePresence>
-                    {selectedProduct.images.length > 1 && (
+                    {selectedProduct.images && selectedProduct.images.length > 1 && (
                       <>
                         <button onClick={() => setCurrentImage(prev => prev > 0 ? prev - 1 : selectedProduct.images.length - 1)}
                           className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 glass-effect rounded-full flex items-center justify-center hover:bg-velvet/30 transition-colors">
@@ -66,7 +66,7 @@ export default function ProductDetail() {
                       {selectedProduct.isOffer && selectedProduct.discount && <span className="bg-deep-red text-white text-[10px] sm:text-xs px-2 sm:px-3 py-1 rounded-full font-bold">-{selectedProduct.discount}%</span>}
                     </div>
                   </div>
-                  {selectedProduct.images.length > 1 && (
+                  {selectedProduct.images && selectedProduct.images.length > 1 && (
                     <div className="flex gap-2 p-3 sm:p-4 overflow-x-auto">
                       {selectedProduct.images.map((img, i) => (
                         <button key={i} onClick={() => setCurrentImage(i)}
