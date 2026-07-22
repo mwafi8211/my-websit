@@ -12,6 +12,7 @@ export default function ProductDetail() {
   } = useStore();
   const [currentImage, setCurrentImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const allImages = selectedProduct ? [selectedProduct.image, ...(selectedProduct.images || [])].filter(Boolean) : [];
 
   if (!selectedProduct) return null;
 
@@ -46,16 +47,16 @@ export default function ProductDetail() {
                   <div className="aspect-square relative overflow-hidden">
                     <AnimatePresence mode="wait">
                       <motion.img key={currentImage} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                        src={selectedProduct.images?.[currentImage] || selectedProduct.image} alt={lang === 'ar' ? selectedProduct.name : selectedProduct.nameEn}
+                        src={allImages[currentImage]} alt={lang === 'ar' ? selectedProduct.name : selectedProduct.nameEn}
                         className="w-full h-full object-cover" />
                     </AnimatePresence>
-                    {selectedProduct.images && selectedProduct.images.length > 1 && (
+                    {allImages.length > 1 && (
                       <>
-                        <button onClick={() => setCurrentImage(prev => prev > 0 ? prev - 1 : selectedProduct.images.length - 1)}
+                        <button onClick={() => setCurrentImage(prev => prev > 0 ? prev - 1 : allImages.length - 1)}
                           className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 glass-effect rounded-full flex items-center justify-center hover:bg-velvet/30 transition-colors">
                           <ChevronLeft size={16} className="text-soft-white" />
                         </button>
-                        <button onClick={() => setCurrentImage(prev => prev < selectedProduct.images.length - 1 ? prev + 1 : 0)}
+                        <button onClick={() => setCurrentImage(prev => prev < allImages.length - 1 ? prev + 1 : 0)}
                           className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 glass-effect rounded-full flex items-center justify-center hover:bg-velvet/30 transition-colors">
                           <ChevronRight size={16} className="text-soft-white" />
                         </button>
@@ -66,9 +67,9 @@ export default function ProductDetail() {
                       {selectedProduct.isOffer && selectedProduct.discount && <span className="bg-deep-red text-white text-[10px] sm:text-xs px-2 sm:px-3 py-1 rounded-full font-bold">-{selectedProduct.discount}%</span>}
                     </div>
                   </div>
-                  {selectedProduct.images && selectedProduct.images.length > 1 && (
+                  {allImages.length > 1 && (
                     <div className="flex gap-2 p-3 sm:p-4 overflow-x-auto">
-                      {selectedProduct.images.map((img, i) => (
+                      {allImages.map((img, i) => (
                         <button key={i} onClick={() => setCurrentImage(i)}
                           className={`w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-all ${i === currentImage ? 'border-velvet' : 'border-transparent opacity-50'}`}>
                           <img src={img} alt="" className="w-full h-full object-cover" />
