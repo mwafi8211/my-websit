@@ -20,6 +20,8 @@ import CheckoutModal from './components/CheckoutModal';
 import LoginModal from './components/LoginModal';
 import OrderTracking from './components/OrderTracking';
 import FlyingHearts from './components/FlyingHearts';
+import CursorGlow from './components/CursorGlow';
+import HeartShippingBanner from './components/HeartShippingBanner';
 
 function HomePage() {
   return (
@@ -58,8 +60,12 @@ export default function App() {
   }, [activePage]);
 
   return (
-    <div className="min-h-screen bg-midnight-dark text-soft-white font-body overflow-x-hidden" dir="rtl">
+    <div className="min-h-screen bg-midnight-dark text-soft-white font-body" dir="rtl">
+      <CursorGlow />
       <Navbar />
+      <div className="sticky top-[clamp(3rem,7vw,4.5rem)] z-40">
+        <HeartShippingBanner />
+      </div>
       <main>
         <PageContent />
       </main>

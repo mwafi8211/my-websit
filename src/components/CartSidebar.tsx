@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import { useStore } from '../store/useStore';
+import HeartShippingProgress from './HeartShippingProgress';
 
 export default function CartSidebar() {
   const { lang, cart, showCart, setShowCart, removeFromCart, updateQuantity, setShowCheckout, setShowLogin, user } = useStore();
@@ -25,6 +26,8 @@ export default function CartSidebar() {
                 <X className="w-5 h-5 text-soft-white/70" />
               </button>
             </div>
+
+            {cart.length > 0 && <HeartShippingProgress />}
 
             <div className="flex-1 overflow-y-auto p-[clamp(0.6rem,2.5vw,1.1rem)] space-y-[clamp(0.4rem,1.2vw,0.65rem)]">
               {cart.length === 0 ? (

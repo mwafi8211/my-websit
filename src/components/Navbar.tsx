@@ -7,7 +7,7 @@ export default function Navbar() {
   const {
     lang, setLang, cart, wishlist, user,
     setActivePage, activePage, searchQuery, setSearchQuery,
-    setShowLogin, setShowCart, setShowOrderTracking, showCart
+    setShowLogin, setShowCart, setShowOrderTracking, showCart, cartPulse
   } = useStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -73,7 +73,10 @@ export default function Navbar() {
             <button onClick={() => setShowOrderTracking(true)} className="p-[clamp(0.8rem,2vw,1rem)] text-soft-white/70 hover:text-rose-gold transition-colors hidden min-[540px]:block">
               <Package className="w-[clamp(1.5rem,3.8vw,1.7rem)] h-[clamp(1.5rem,3.8vw,1.7rem)]" />
             </button>
-            <button onClick={() => setShowCart(!showCart)} className="p-[clamp(0.8rem,2vw,1rem)] text-soft-white/70 hover:text-rose-gold transition-colors relative">
+            <motion.button onClick={() => setShowCart(!showCart)}
+              animate={cartPulse ? { scale: [1, 1.35, 0.9, 1.15, 1] } : {}}
+              transition={{ duration: 0.6, ease: 'easeInOut' }}
+              className="p-[clamp(0.8rem,2vw,1rem)] text-soft-white/70 hover:text-rose-gold transition-colors relative">
               <ShoppingCart className="w-[clamp(1.5rem,3.8vw,1.7rem)] h-[clamp(1.5rem,3.8vw,1.7rem)]" />
               {totalItems > 0 && (
                 <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }}
@@ -81,7 +84,7 @@ export default function Navbar() {
                   {totalItems}
                 </motion.span>
               )}
-            </button>
+            </motion.button>
             <button onClick={() => user ? setActivePage('profile') : setShowLogin(true)} className="p-[clamp(0.8rem,2vw,1rem)] text-soft-white/70 hover:text-rose-gold transition-colors">
               <User className="w-[clamp(1.5rem,3.8vw,1.7rem)] h-[clamp(1.5rem,3.8vw,1.7rem)]" />
             </button>

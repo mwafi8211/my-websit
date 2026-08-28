@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Heart, Star, Truck } from 'lucide-react';
+import { ShoppingCart, Heart, Star, Truck, Plus } from 'lucide-react';
 import { useStore, Product } from '../store/useStore';
 
 interface Props { product: Product; index?: number; }
@@ -45,21 +45,36 @@ export default function ProductCard({ product, index = 0 }: Props) {
           </div>
         )}
 
+        {/* Badges - now with glowing outline style instead of solid fill */}
         <div className="absolute top-3 right-3 flex flex-col gap-1.5 z-10">
-          {product.isNew && <span className="bg-velvet text-white text-[0.7rem] md:text-[0.78rem] px-2.5 py-1 rounded-full font-bold">{lang === 'ar' ? 'جديد' : 'NEW'}</span>}
-          {product.isOffer && product.discount && <span className="bg-deep-red text-white text-[0.7rem] md:text-[0.78rem] px-2.5 py-1 rounded-full font-bold">-{product.discount}%</span>}
+          {product.isNew && (
+            <span className="bg-midnight-dark/70 backdrop-blur-sm border border-velvet-light text-velvet-light text-[0.7rem] md:text-[0.78rem] px-2.5 py-1 rounded-full font-bold shadow-[0_0_10px_rgba(255,20,147,0.5)]">
+              {lang === 'ar' ? 'جديد' : 'NEW'}
+            </span>
+          )}
+          {product.isOffer && product.discount && (
+            <span className="bg-midnight-dark/70 backdrop-blur-sm border border-deep-red text-deep-red text-[0.7rem] md:text-[0.78rem] px-2.5 py-1 rounded-full font-bold shadow-[0_0_10px_rgba(199,21,133,0.5)]">
+              -{product.discount}%
+            </span>
+          )}
         </div>
 
+        {/* Wishlist icon - bigger, glowing ring, scales up on hover */}
         <button onClick={handleWishlist}
-          className="absolute top-3 left-3 w-10 h-10 rounded-full glass-effect flex items-center justify-center hover:bg-rose-pink/20 transition-colors z-30 active:scale-90">
-          <Heart className="w-5 h-5 text-soft-white" fill={inWishlist ? '#f0a6ca' : 'none'} />
+          className={`absolute top-3 left-3 w-11 h-11 rounded-full glass-effect flex items-center justify-center transition-all duration-300 z-30 active:scale-90 hover:scale-110 ${inWishlist ? 'shadow-[0_0_16px_rgba(255,20,147,0.7)] border border-velvet-light' : 'hover:shadow-[0_0_12px_rgba(255,20,147,0.4)]'}`}>
+          <Heart className="w-5 h-5 text-soft-white transition-transform" fill={inWishlist ? '#FF1493' : 'none'} strokeWidth={2} />
         </button>
 
-        <div className="absolute bottom-3 left-3 right-3 z-10">
-          <motion.button whileTap={{ scale: 0.95 }} onClick={handleAddToCart}
-            className="w-full py-2.5 bg-gradient-to-r from-velvet to-velvet-light rounded-xl text-white text-[0.82rem] md:text-[0.9rem] font-bold flex items-center justify-center gap-2 shadow-lg shadow-velvet/30 active:scale-98">
-            <ShoppingCart className="w-[1.05rem] h-[1.05rem]" />
-            <span>{lang === 'ar' ? 'أضف' : 'Add'}</span>
+        {/* Add to cart - floating circular button, expands to show label on hover */}
+        <div className="absolute bottom-3 right-3 z-10">
+          <motion.button whileTap={{ scale: 0.9 }} onClick={handleAddToCart}
+            className="group/btn flex items-center gap-0 overflow-hidden h-11 rounded-full bg-gradient-to-r from-velvet to-velvet-light shadow-lg shadow-velvet/40 active:scale-95 transition-all duration-300 hover:pl-4">
+            <span className="max-w-0 group-hover/btn:max-w-[80px] overflow-hidden whitespace-nowrap transition-all duration-300 text-white text-[0.82rem] font-bold">
+              {lang === 'ar' ? 'أضف' : 'Add'}
+            </span>
+            <span className="w-11 h-11 flex items-center justify-center flex-shrink-0">
+              <ShoppingCart className="w-[1.2rem] h-[1.2rem] text-white" />
+            </span>
           </motion.button>
         </div>
       </div>
@@ -74,7 +89,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
         <div className="flex items-center gap-2">
           <div className="flex gap-0.5">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className={`w-[1.08rem] h-[1.08rem] ${i < Math.floor(product.rating) ? 'text-gold fill-gold' : 'text-soft-white/20'}`} />
+              <Star key={i} className={`w-[1.08rem] h-[1.08rem] transition-all ${i < Math.floor(product.rating) ? 'text-gold fill-gold drop-shadow-[0_0_4px_rgba(255,20,147,0.6)]' : 'text-soft-white/20'}`} />
             ))}
           </div>
           <span className="text-[0.94rem] md:text-[1rem] text-soft-white/45">({product.rating})</span>

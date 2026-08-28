@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-midnight: #1a0a2e;
-  --color-midnight-light: #2d1b4e;
-  --color-midnight-dark: #0f0620;
-  --color-velvet: #6b2fa0;
-  --color-velvet-light: #8b4fcf;
-  --color-velvet-dark: #4a1d75;
-  --color-rose-gold: #e8a87c;
-  --color-rose-warm: #d4756b;
-  --color-rose-pink: #f0a6ca;
-  --color-cream: #fdf6f0;
-  --color-gold: #d4a574;
-  --color-gold-light: #f0d5a8;
-  --color-deep-red: #8b2252;
-  --color-soft-white: #f8f0e8;
+  --color-midnight: #000000;
+  --color-midnight-light: #0d0d0d;
+  --color-midnight-dark: #000000;
+  --color-velvet: #EC008C;
+  --color-velvet-light: #FF1493;
+  --color-velvet-dark: #C71585;
+  --color-rose-gold: #FF69B4;
+  --color-rose-warm: #FF1493;
+  --color-rose-pink: #FFB6D9;
+  --color-cream: #F5F0E8;
+  --color-gold: #FF1493;
+  --color-gold-light: #FFB6D9;
+  --color-deep-red: #C71585;
+  --color-soft-white: #F5F0E8;
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Tajawal', sans-serif;
 }
@@ -32,8 +32,8 @@ html {
 
 body {
   font-family: 'Tajawal', sans-serif;
-  background-color: #0f0620;
-  color: #f8f0e8;
+  background-color: #000000;
+  color: #F5F0E8;
   direction: rtl;
   overflow-x: hidden;
   min-height: 100vh;
@@ -52,10 +52,10 @@ body {
   width: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #1a0a2e;
+  background: #000000;
 }
 ::-webkit-scrollbar-thumb {
-  background: #6b2fa0;
+  background: #EC008C;
   border-radius: 3px;
 }
 
@@ -65,14 +65,14 @@ body {
 }
 
 .glass-effect {
-  background: rgba(26, 10, 46, 0.85);
+  background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(107, 47, 160, 0.2);
+  border: 1px solid rgba(236, 0, 140, 0.3);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #e8a87c, #f0a6ca, #d4a574);
+  background: linear-gradient(135deg, #FF1493, #EC008C, #FFB6D9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

@@ -93,6 +93,10 @@ interface StoreState {
   setShowOrderTracking: (show: boolean) => void;
   showCart: boolean;
   setShowCart: (show: boolean) => void;
+  cartPulse: boolean;
+  triggerCartPulse: () => void;
+  freeShippingThreshold: number;
+  fetchFreeShippingThreshold: () => Promise<void>;
 }
 
 // رابط الـ Google Apps Script بتاع شيت أوردرات المحافظات
@@ -116,6 +120,7 @@ export const useStore = create<StoreState>()(
         } else {
           set({ cart: [...cart, { product, quantity: 1 }] });
         }
+        get().triggerCartPulse();
       },
       removeFromCart: (productId) => set({ cart: get().cart.filter(item => item.product.id !== productId) }),
       updateQuantity: (productId, quantity) => {
@@ -292,6 +297,22 @@ export const useStore = create<StoreState>()(
 
       showCart: false,
       setShowCart: (show) => set({ showCart: show }),
+
+      cartPulse: false,
+      triggerCartPulse: () => {
+        set({ cartPulse: true });
+        setTimeout(() => set({ cartPulse: false }), 600);
+      },
+
+      freeShippingThreshold: 500,
+      fetchFreeShippingThreshold: async () => {
+        const { data } = await supabase
+          .from('settings')
+          .select('value')
+          .eq('key', 'free_shipping_threshold')
+          .single();
+        if (data) set({ freeShippingThreshold: Number(data.value) });
+      },
     }),
     {
       name: 'saada-store', // اسم الـ key في localStorage
