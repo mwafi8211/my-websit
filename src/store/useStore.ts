@@ -73,6 +73,7 @@ interface StoreState {
   isInWishlist: (productId: number) => boolean;
   orders: Order[];
   addOrder: (order: Order, proofFile?: File) => void;
+  removeOrder: (orderId: string) => void;
   discountCode: string;
   discountPercentage: number;
   discountAmount: number;
@@ -260,6 +261,7 @@ export const useStore = create<StoreState>()(
           console.error('Error sending order to Google Sheet:', err);
         }
       },
+      removeOrder: (orderId) => set({ orders: get().orders.filter(o => o.id !== orderId) }),
 
       discountCode: '',
       discountPercentage: 0,

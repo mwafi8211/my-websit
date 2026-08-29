@@ -12,7 +12,7 @@ const statusSteps = [
 ];
 
 export default function OrderTracking() {
-  const { lang, orders, showOrderTracking, setShowOrderTracking } = useStore();
+  const { lang, orders, showOrderTracking, setShowOrderTracking, removeOrder } = useStore();
   const [liveStatuses, setLiveStatuses] = useState<Record<string, string>>({});
 
 useEffect(() => {
@@ -29,6 +29,12 @@ useEffect(() => {
       const statusMap: Record<string, string> = {};
       data.forEach(row => { statusMap[row.id] = row.status; });
       setLiveStatuses(statusMap);
+
+      // لو الطلب اتحذف من الأدمن، امسحه من الطلبات المحلية عند العميل
+      const existingIds = new Set(data.map(row => row.id));
+      ids.forEach(id => {
+        if (!existingIds.has(id)) removeOrder(id);
+      });
     }
   };
 
