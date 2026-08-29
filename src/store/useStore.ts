@@ -42,6 +42,7 @@ export interface Order {
   governorate?: string;
   address?: string;
   paymentProofUrl?: string;
+  joinLuckyDraw?: boolean;
 }
 
 export interface User {
@@ -74,6 +75,8 @@ interface StoreState {
   addOrder: (order: Order, proofFile?: File) => void;
   discountCode: string;
   discountPercentage: number;
+  discountAmount: number;
+  discountType: string;
   applyDiscount: (code: string) => Promise<boolean>;
   clearDiscount: () => void;
   flyingHearts: FlyingHeart[];
@@ -97,6 +100,8 @@ interface StoreState {
   triggerCartPulse: () => void;
   freeShippingThreshold: number;
   fetchFreeShippingThreshold: () => Promise<void>;
+  luckyDrawMinOrder: number;
+  fetchLuckyDrawMinOrder: () => Promise<void>;
 }
 
 // رابط الـ Google Apps Script بتاع شيت أوردرات المحافظات
@@ -216,10 +221,20 @@ export const useStore = create<StoreState>()(
           }));
 
           await supabase.from('order_items').insert(items);
+
+          // تسجيل في السحب الشهري لو العميل مفعّل ده والطلب فوق الحد الأدنى
+          if (order.joinLuckyDraw && order.total >= get().luckyDrawMinOrder) {
+            await supabase.from('lucky_draw_entries').insert({
+              order_id: order.id,
+              user_id: userId,
+              name: user.name,
+              phone: user.phone,
+              order_total: order.total,
+            });
+          }
         } catch (err) {
           console.error('Error saving order:', err);
         }
-
         // بعت كل الأوردرات لشيت المحافظات (بما فيهم القاهرة والجيزة، هيتفرقوا في تاب تاني جوه نفس الشيت)
         try {
           if (order.governorate) {
@@ -248,24 +263,35 @@ export const useStore = create<StoreState>()(
 
       discountCode: '',
       discountPercentage: 0,
+      discountAmount: 0,
+      discountType: 'percentage',
       applyDiscount: async (code) => {
         const upper = code.toUpperCase();
 
         // جيب الكود من Supabase
         const { data } = await supabase
           .from('discount_codes')
-          .select('percentage')
+          .select('percentage, amount, discount_type, expires_at')
           .eq('code', upper)
           .eq('is_active', true)
           .single();
 
-        if (data) {
-          set({ discountCode: upper, discountPercentage: data.percentage });
-          return true;
+        if (!data) return false;
+
+        // لو الكود له تاريخ انتهاء وعدّاه، يترفض
+        if (data.expires_at && new Date(data.expires_at) < new Date()) {
+          return false;
         }
-        return false;
+
+        set({
+          discountCode: upper,
+          discountType: data.discount_type || 'percentage',
+          discountPercentage: data.discount_type === 'fixed' ? 0 : data.percentage,
+          discountAmount: data.discount_type === 'fixed' ? data.amount : 0,
+        });
+        return true;
       },
-      clearDiscount: () => set({ discountCode: '', discountPercentage: 0 }),
+      clearDiscount: () => set({ discountCode: '', discountPercentage: 0, discountAmount: 0, discountType: 'percentage' }),
 
       flyingHearts: [],
       addFlyingHeart: (x, y) => {
@@ -312,6 +338,16 @@ export const useStore = create<StoreState>()(
           .eq('key', 'free_shipping_threshold')
           .single();
         if (data) set({ freeShippingThreshold: Number(data.value) });
+      },
+
+      luckyDrawMinOrder: 1500,
+      fetchLuckyDrawMinOrder: async () => {
+        const { data } = await supabase
+          .from('settings')
+          .select('value')
+          .eq('key', 'lucky_draw_min_order')
+          .single();
+        if (data) set({ luckyDrawMinOrder: Number(data.value) });
       },
     }),
     {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Truck, Wallet, CheckCircle, Tag, Upload, Copy, Check } from 'lucide-react';
 import { useStore } from '../store/useStore';
@@ -14,8 +14,11 @@ const egyptGovernorates = [
 ];
 
 export default function CheckoutModal() {
-  const { lang, cart, showCheckout, setShowCheckout, user, discountCode, discountPercentage, applyDiscount, clearDiscount, clearCart, addOrder } = useStore();
+  const { lang, cart, showCheckout, setShowCheckout, user, discountCode, discountPercentage, discountAmount, discountType, applyDiscount, clearDiscount, clearCart, addOrder, luckyDrawMinOrder, fetchLuckyDrawMinOrder } = useStore();
   const { settings } = useSettings();
+  const [joinLuckyDraw, setJoinLuckyDraw] = useState(false);
+
+  useEffect(() => { fetchLuckyDrawMinOrder(); }, []);
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'wallet'>('cod');
   const [address, setAddress] = useState('');
   const [governorate, setGovernorate] = useState('');
@@ -26,12 +29,12 @@ export default function CheckoutModal() {
   const [transferImage, setTransferImage] = useState<string | null>(null);
   const [transferImageFile, setTransferImageFile] = useState<File | null>(null);
   const [copied, setCopied] = useState(false);
-
   const subtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
-  const discountAmount = (subtotal * discountPercentage) / 100;
+  const computedDiscount = discountType === 'fixed' ? discountAmount : (subtotal * discountPercentage) / 100;
+
   const hasFreeShippingItem = cart.some(item => item.product.free_shipping);
   const shipping = (hasFreeShippingItem || subtotal > settings.free_shipping_threshold) ? 0 : settings.default_shipping_cost;
-  const total = subtotal - discountAmount + shipping;
+  const total = subtotal - computedDiscount + shipping;
 
   const handleApplyCoupon = () => { const success = applyDiscount(couponInput); if (!success) setCouponError(lang === 'ar' ? 'كود خصم غير صالح' : 'Invalid discount code'); else setCouponError(''); };
   const handleCopyNumber = () => { navigator.clipboard.writeText(settings.wallet_number); setCopied(true); setTimeout(() => setCopied(false), 2000); };
@@ -40,17 +43,18 @@ export default function CheckoutModal() {
   const handlePlaceOrder = () => {
     if (!address || !governorate) return;
     if (paymentMethod === 'wallet' && !transferImage) return;
+    if (joinLuckyDraw && total < luckyDrawMinOrder) return;
     const id = 'ORD-' + Date.now().toString(36).toUpperCase();
     setOrderId(id);
     addOrder(
-      { id, items: [...cart], total, status: 'ordered', date: new Date().toLocaleDateString('ar-EG'), paymentMethod: paymentMethod === 'cod' ? (lang === 'ar' ? 'الدفع عند الاستلام' : 'Cash on Delivery') : (lang === 'ar' ? 'محفظة إلكترونية' : 'E-Wallet'), governorate, address },
+      { id, items: [...cart], total, status: 'ordered', date: new Date().toLocaleDateString('ar-EG'), paymentMethod: paymentMethod === 'cod' ? (lang === 'ar' ? 'الدفع عند الاستلام' : 'Cash on Delivery') : (lang === 'ar' ? 'محفظة إلكترونية' : 'E-Wallet'), governorate, address, joinLuckyDraw },
       paymentMethod === 'wallet' ? transferImageFile ?? undefined : undefined
     );
     clearCart(); clearDiscount(); setOrderPlaced(true);
   };
 
   const handleClose = () => { setShowCheckout(false); setOrderPlaced(false); setOrderId(''); setAddress(''); setGovernorate(''); setCouponInput(''); setCouponError(''); setTransferImage(null); setTransferImageFile(null); };
-  const canPlaceOrder = address && governorate && (paymentMethod === 'cod' || (paymentMethod === 'wallet' && transferImage));
+  const canPlaceOrder = address && governorate && (paymentMethod === 'cod' || (paymentMethod === 'wallet' && transferImage)) && !(joinLuckyDraw && total < luckyDrawMinOrder);
 
   return (
     <AnimatePresence>
@@ -108,6 +112,19 @@ export default function CheckoutModal() {
                       className="w-full bg-midnight-light/50 border border-velvet/20 rounded-xl px-4 py-3 text-soft-white placeholder:text-soft-white/20 focus:outline-none focus:border-velvet text-[clamp(0.7rem,2vw,0.85rem)] resize-none h-20" />
                   </div>
 
+                  <div className="bg-velvet/10 border border-velvet/30 rounded-xl p-4">
+                    <label className="flex items-center gap-3 cursor-pointer">
+                      <input type="checkbox" checked={joinLuckyDraw} onChange={(e) => setJoinLuckyDraw(e.target.checked)}
+                        className="w-5 h-5 accent-velvet" />
+                      <span className="text-[clamp(0.7rem,2vw,0.85rem)] text-soft-white">🎁 {lang === 'ar' ? `أدخل السحب الشهري (الطلب لازم يكون ${luckyDrawMinOrder} ج.م أو أكتر)` : `Join monthly lucky draw (order must be ${luckyDrawMinOrder} EGP+)`}</span>
+                    </label>
+                    {joinLuckyDraw && total < luckyDrawMinOrder && (
+                      <p className="text-rose-warm text-xs mt-2">
+                        {lang === 'ar' ? `طلبك لسه ${luckyDrawMinOrder - total} ج.م ناقصين عشان تدخل السحب` : `You need ${luckyDrawMinOrder - total} EGP more to join the draw`}
+                      </p>
+                    )}
+                  </div>
+
                   <div>
                     <label className="text-[clamp(0.65rem,1.8vw,0.8rem)] text-soft-white/70 block mb-2">💰 {lang === 'ar' ? 'طريقة الدفع' : 'Payment'}</label>
                     <div className="grid grid-cols-2 gap-3">
@@ -151,7 +168,7 @@ export default function CheckoutModal() {
                       <button onClick={handleApplyCoupon} className="px-4 bg-velvet/30 border border-velvet/50 rounded-xl text-velvet-light text-sm font-medium hover:bg-velvet/50 transition-colors">{lang === 'ar' ? 'تطبيق' : 'Apply'}</button>
                     </div>
                     {couponError && <p className="text-rose-warm text-xs mt-1">{couponError}</p>}
-                    {discountCode && <p className="text-velvet-light text-xs mt-1">✅ {lang === 'ar' ? `خصم ${discountPercentage}%` : `${discountPercentage}% off`}</p>}
+                    {discountCode && <p className="text-velvet-light text-xs mt-1">✅ {discountType === 'fixed' ? (lang === 'ar' ? `خصم ${discountAmount} ج.م` : `${discountAmount} EGP off`) : (lang === 'ar' ? `خصم ${discountPercentage}%` : `${discountPercentage}% off`)}</p>}
                   </div>
 
                   <div className="bg-midnight-light/30 rounded-xl p-4 space-y-2 border border-velvet/10">
@@ -164,7 +181,7 @@ export default function CheckoutModal() {
                     ))}
                     <div className="border-t border-velvet/10 pt-2 space-y-1">
                       <div className="flex justify-between text-xs"><span className="text-soft-white/50">{lang === 'ar' ? 'المجموع' : 'Subtotal'}</span><span className="text-soft-white">{subtotal} {lang === 'ar' ? 'ج.م' : 'EGP'}</span></div>
-                      {discountAmount > 0 && <div className="flex justify-between text-xs"><span className="text-velvet-light">{lang === 'ar' ? 'الخصم' : 'Discount'}</span><span className="text-velvet-light">-{discountAmount} {lang === 'ar' ? 'ج.م' : 'EGP'}</span></div>}
+                      {computedDiscount > 0 && <div className="flex justify-between text-xs"><span className="text-velvet-light">{lang === 'ar' ? 'الخصم' : 'Discount'}</span><span className="text-velvet-light">-{computedDiscount} {lang === 'ar' ? 'ج.م' : 'EGP'}</span></div>}
                       <div className="flex justify-between text-xs"><span className="text-soft-white/50">{lang === 'ar' ? 'الشحن' : 'Shipping'}</span><span className={shipping === 0 ? 'text-velvet-light' : 'text-soft-white'}>{shipping === 0 ? (lang === 'ar' ? 'مجاني' : 'Free') : `${shipping} ${lang === 'ar' ? 'ج.م' : 'EGP'}`}</span></div>
                       <div className="flex justify-between text-lg font-bold border-t border-velvet/10 pt-2"><span className="text-soft-white">{lang === 'ar' ? 'الإجمالي' : 'Total'}</span><span className="text-rose-gold">{total} {lang === 'ar' ? 'ج.م' : 'EGP'}</span></div>
                     </div>

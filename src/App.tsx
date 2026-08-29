@@ -22,6 +22,7 @@ import OrderTracking from './components/OrderTracking';
 import FlyingHearts from './components/FlyingHearts';
 import CursorGlow from './components/CursorGlow';
 import HeartShippingBanner from './components/HeartShippingBanner';
+import LuckyDrawWidget from './components/LuckyDrawWidget';
 
 function HomePage() {
   return (
@@ -76,6 +77,7 @@ export default function App() {
       <LoginModal />
       <OrderTracking />
       <FlyingHearts />
+      <LuckyDrawWidget />
 
       <motion.a
         href="https://wa.me/201109828191" target="_blank" rel="noopener noreferrer"
