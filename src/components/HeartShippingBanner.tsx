@@ -14,9 +14,9 @@ export default function HeartShippingBanner() {
 
   return (
     <div className="w-full bg-midnight-light/60 border-b border-velvet/15 backdrop-blur-sm">
-      <div className="fluid-wrap py-[clamp(0.6rem,2vw,0.9rem)]">
+      <div className="px-[clamp(0.8rem,3vw,1.3rem)] py-[clamp(0.6rem,2vw,0.9rem)]">
         <div className="flex items-center gap-[clamp(0.7rem,2.5vw,1.3rem)]">
-          <div className="relative w-[clamp(2.6rem,7vw,3.4rem)] h-[clamp(2.6rem,7vw,3.4rem)] flex-shrink-0">
+          <div className="relative w-[clamp(2.4rem,6.5vw,3.1rem)] h-[clamp(2.4rem,6.5vw,3.1rem)] flex-shrink-0">
             <svg viewBox="0 0 24 24" className="w-full h-full">
               <defs>
                 <clipPath id="heartClipBanner">
@@ -29,7 +29,7 @@ export default function HeartShippingBanner() {
               </defs>
               <path
                 d="M12 21s-6.7-4.35-9.3-8.1C.9 10.2 1.4 6.8 4.2 5.1c2.4-1.45 5.1-.6 6.8 1.4 1.7-2 4.4-2.85 6.8-1.4 2.8 1.7 3.3 5.1 1.5 7.8C18.7 16.65 12 21 12 21z"
-                fill="none" stroke="#FF1493" strokeWidth="0.8" opacity="0.35"
+                fill="none" stroke="#FF1493" strokeWidth="1" opacity="0.35"
               />
               <g clipPath="url(#heartClipBanner)">
                 <motion.rect
@@ -50,13 +50,13 @@ export default function HeartShippingBanner() {
             <motion.p
               key={isComplete ? 'done' : remaining}
               initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }}
-              className={`text-[clamp(0.78rem,2.2vw,1rem)] font-extrabold leading-tight ${isComplete ? 'text-velvet-light' : 'text-soft-white'}`}
+              className={`text-[clamp(0.68rem,1.9vw,0.85rem)] font-extrabold leading-tight ${isComplete ? 'text-velvet-light' : 'text-soft-white'}`}
             >
               {isComplete
                 ? (lang === 'ar' ? '💖 قلبك اكتمل والشحن بقى علينا!' : '💖 Your heart is full — shipping is on us!')
                 : (lang === 'ar' ? `لسه ${remaining}ج وقلبك يكتمل والشحن يبقى علينا` : `${remaining} EGP left to complete your heart & get free shipping`)}
             </motion.p>
-            <div className="w-full h-[clamp(0.35rem,1vw,0.5rem)] bg-midnight-dark/60 rounded-full mt-[clamp(0.3rem,1vw,0.45rem)] overflow-hidden">
+            <div className="w-full h-[clamp(0.3rem,0.8vw,0.4rem)] bg-midnight-dark/60 rounded-full mt-[clamp(0.25rem,0.8vw,0.35rem)] overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
                 style={{ background: 'linear-gradient(90deg, #EC008C, #FF1493)', boxShadow: '0 0 8px rgba(255,20,147,0.6)' }}
