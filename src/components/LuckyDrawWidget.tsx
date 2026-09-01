@@ -18,9 +18,9 @@ export default function LuckyDrawWidget() {
   const qualified = remaining <= 0;
 
   return (
-    <div className="relative z-40 flex items-center gap-3 bg-gradient-to-r from-purple-700 to-pink-600 px-[clamp(0.8rem,3vw,1.5rem)] py-2 shadow-lg shadow-purple-700/30 w-full">
-      <div className="relative w-[clamp(1.8rem,5vw,2.4rem)] h-[clamp(1.8rem,5vw,2.4rem)] flex-shrink-0 flex items-center justify-center">
-        <span className="text-[clamp(1rem,3vw,1.3rem)]">🎁</span>
+    <div className="relative z-40 flex items-center gap-3 bg-gradient-to-r from-purple-700 to-pink-600 px-[clamp(0.8rem,3vw,1.5rem)] py-[clamp(0.6rem,2vw,0.9rem)] shadow-lg shadow-purple-700/30 w-full">
+      <div className="relative w-[clamp(2.4rem,6.5vw,3.1rem)] h-[clamp(2.4rem,6.5vw,3.1rem)] flex-shrink-0 flex items-center justify-center">
+        <span className="text-[clamp(1.4rem,4vw,1.8rem)]">🎁</span>
       </div>
 
       <div className="min-w-0 flex-1">
@@ -28,7 +28,7 @@ export default function LuckyDrawWidget() {
           key={qualified ? "done" : remaining}
           initial={{ opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-[clamp(0.65rem,1.8vw,0.85rem)] text-white font-bold leading-tight"
+          className="text-[clamp(0.85rem,2.3vw,1.1rem)] text-white font-bold leading-tight"
         >
           {qualified
             ? lang === "ar"
