@@ -7,7 +7,7 @@ export default function HeroSection() {
   const { lang, setActivePage } = useStore();
 
   return (
-    <section className="relative min-h-screen flex items-start justify-center overflow-hidden pt-[clamp(15rem,18vw,17rem)] pb-[clamp(2rem,6vw,3rem)]">
+    <section className="relative min-h-screen flex items-start justify-end overflow-hidden pt-[clamp(15rem,18vw,17rem)] pb-[clamp(2rem,6vw,3rem)]">
       <div className="absolute inset-0">
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -36,7 +36,7 @@ export default function HeroSection() {
         />
       ))}
 
-      <div className="relative z-10 text-center px-[clamp(1rem,4vw,2rem)] w-[min(96vw,800px)] mx-auto">
+<div className="relative z-10 text-right px-[clamp(1rem,4vw,2rem)] w-[min(96vw,800px)] mr-0 ml-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
