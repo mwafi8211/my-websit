@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import TrustBadges from "./TrustBadges";
 import { ArrowDown, Sparkles } from "lucide-react";
 import { useStore } from "../store/useStore";
 import HeartShippingBanner from "./HeartShippingBanner";
@@ -109,6 +110,9 @@ export default function HeroSection() {
 
         <div className="mt-[clamp(0.6rem,2vw,1rem)] w-[min(96vw,600px)] mr-0 ml-auto bg-midnight-light/30 border border-velvet/20 rounded-[clamp(0.8rem,2.5vw,1.2rem)] p-[clamp(0.6rem,2vw,1rem)]">
           <HeartShippingBanner />
+        </div>
+        <div className="mt-[clamp(1rem,3vw,1.8rem)] w-[min(96vw,600px)] mr-0 ml-auto">
+          <TrustBadges />
         </div>
       </div>
 

@@ -6,7 +6,6 @@ import HeroSection from "./components/HeroSection";
 import CategoriesSection from "./components/CategoriesSection";
 import FeaturedProducts from "./components/FeaturedProducts";
 import SpecialOffers from "./components/SpecialOffers";
-import TrustBadges from "./components/TrustBadges";
 import StatsSection from "./components/StatsSection";
 import NewsletterSection from "./components/NewsletterSection";
 import FAQSection from "./components/FAQSection";
@@ -27,9 +26,6 @@ function HomePage() {
   return (
     <>
       <HeroSection />
-      <div className="relative z-10">
-        <TrustBadges />
-      </div>
       <CategoriesSection />
       <FeaturedProducts />
       <StatsSection />

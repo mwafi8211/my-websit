@@ -11,9 +11,8 @@ export default function TrustBadges() {
   ];
 
   return (
-    <section className="py-[clamp(1.2rem,4vw,2.5rem)] border-y border-velvet/10 bg-midnight-light/10">
-      <div className="fluid-wrap">
-        <div className="grid grid-cols-3 gap-[clamp(0.8rem,3vw,2rem)]">
+    <div>
+      <div className="grid grid-cols-3 gap-[clamp(0.8rem,3vw,2rem)]">
           {badges.map((badge, index) => (
             <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               transition={{ delay: index * 0.1 }} whileHover={{ y: -3 }}
@@ -28,6 +27,5 @@ export default function TrustBadges() {
           ))}
         </div>
       </div>
-    </section>
   );
 }
