@@ -50,7 +50,7 @@ export default function HeartShippingBanner() {
             <motion.p
               key={isComplete ? 'done' : remaining}
               initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }}
-              className={`text-[clamp(0.6rem,1.6vw,0.75rem)] font-extrabold leading-tight ${isComplete ? 'text-velvet-light' : 'text-soft-white'}`}
+className={`text-[clamp(0.6rem,1.6vw,0.75rem)] font-extrabold leading-tight ${isComplete ? 'text-velvet-light' : 'text-white'}`}
             >
               {isComplete
                 ? (lang === 'ar' ? '💖 قلبك اكتمل والشحن بقى علينا!' : '💖 Your heart is full — shipping is on us!')

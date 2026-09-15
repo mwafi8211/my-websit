@@ -100,18 +100,12 @@ export default function HeroSection() {
           >
             {lang === "ar" ? "🛍️ تسوق الآن" : "🛍️ Shop Now"}
           </motion.button>
-          <div className="bg-midnight-light/30 border border-velvet/20 rounded-[clamp(0.8rem,2.5vw,1.2rem)] p-[clamp(0.6rem,2vw,1rem)] flex flex-col items-center justify-center gap-1">
-            <span className="text-[clamp(1.3rem,3.5vw,1.8rem)]">🚚</span>
-            <span className="text-[clamp(0.75rem,2vw,0.95rem)] font-bold text-soft-white">
-              {lang === "ar" ? "شحن مجاني" : "Free Shipping"}
-            </span>
+          <div className="bg-midnight-light/30 border border-velvet/20 rounded-[clamp(0.8rem,2.5vw,1.2rem)] p-[clamp(0.6rem,2vw,1rem)] flex items-center justify-center">
+            <HeartShippingBanner />
           </div>
         </div>
 
-        <div className="mt-[clamp(0.6rem,2vw,1rem)] w-[min(96vw,600px)] mr-0 ml-auto bg-midnight-light/30 border border-velvet/20 rounded-[clamp(0.8rem,2.5vw,1.2rem)] p-[clamp(0.6rem,2vw,1rem)]">
-          <HeartShippingBanner />
-        </div>
-        <div className="mt-[clamp(1rem,3vw,1.8rem)] w-[min(96vw,600px)] mr-0 ml-auto">
+        <div className="mt-[clamp(1.4rem,4vw,2.2rem)] w-[min(96vw,600px)] mr-0 ml-auto">
           <TrustBadges />
         </div>
       </div>
