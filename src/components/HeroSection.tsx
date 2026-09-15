@@ -80,14 +80,14 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-[clamp(0.65rem,1.8vw,0.9rem)] text-soft-white/50 mb-[clamp(1.2rem,4vw,2.2rem)] max-w-[min(90%,550px)] mx-auto"
+          className="text-[clamp(0.65rem,1.8vw,0.9rem)] text-soft-white/50 mb-[clamp(1.2rem,4vw,2.2rem)] max-w-[min(90%,550px)] mr-0 ml-auto"
         >
           {lang === "ar"
             ? "اكتشف مجموعة حصرية من المنتجات المصممة خصيصاً لإضافة لمسة سحرية على حياتكم الزوجية"
             : "Discover an exclusive collection designed to add magic to your married life"}
         </motion.p>
 
-        <div className="grid grid-cols-2 gap-[clamp(0.6rem,2vw,1rem)] w-[min(96vw,600px)] mx-auto">
+        <div className="grid grid-cols-2 gap-[clamp(0.6rem,2vw,1rem)] w-[min(96vw,600px)] mr-0 ml-auto">
           <motion.button
             whileHover={{
               scale: 1.05,
@@ -107,7 +107,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="mt-[clamp(0.6rem,2vw,1rem)] w-[min(96vw,600px)] mx-auto bg-midnight-light/30 border border-velvet/20 rounded-[clamp(0.8rem,2.5vw,1.2rem)] p-[clamp(0.6rem,2vw,1rem)]">
+        <div className="mt-[clamp(0.6rem,2vw,1rem)] w-[min(96vw,600px)] mr-0 ml-auto bg-midnight-light/30 border border-velvet/20 rounded-[clamp(0.8rem,2.5vw,1.2rem)] p-[clamp(0.6rem,2vw,1rem)]">
           <HeartShippingBanner />
         </div>
       </div>
