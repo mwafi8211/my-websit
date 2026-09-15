@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useStore } from "./store/useStore";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
-import CategoriesSection from "./components/CategoriesSection";
 import FeaturedProducts from "./components/FeaturedProducts";
 import SpecialOffers from "./components/SpecialOffers";
 import StatsSection from "./components/StatsSection";
@@ -26,7 +25,6 @@ function HomePage() {
   return (
     <>
       <HeroSection />
-      <CategoriesSection />
       <FeaturedProducts />
       <StatsSection />
       <SpecialOffers />

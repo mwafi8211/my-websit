@@ -3,6 +3,7 @@ import TrustBadges from "./TrustBadges";
 import { ArrowDown, Sparkles } from "lucide-react";
 import { useStore } from "../store/useStore";
 import HeartShippingBanner from "./HeartShippingBanner";
+import CategoriesCarousel from "./CategoriesCarousel";
 
 export default function HeroSection() {
   const { lang, setActivePage } = useStore();
@@ -70,7 +71,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-[clamp(0.8rem,2.8vw,1.4rem)] text-rose-gold/90 mb-[clamp(0.4rem,1.5vw,0.7rem)] font-medium leading-relaxed"
+          className="text-[clamp(1rem,3vw,1.4rem)] text-white mb-[clamp(1.2rem,4vw,2.2rem)] max-w-[min(90%,550px)] mr-0 ml-auto"
         >
           {lang === "ar"
             ? "مش مجرد منتجات... دي أول خطوة في ليلة مش هتتنسى"
@@ -107,6 +108,10 @@ export default function HeroSection() {
 
         <div className="mt-[clamp(2.6rem,8vw,4.2rem)] w-[min(96vw,600px)] mr-0 ml-auto">
           <TrustBadges />
+        </div>
+
+        <div className="mt-[clamp(1.5rem,5vw,2.5rem)] w-[min(96vw,600px)] mr-0 ml-auto">
+          <CategoriesCarousel />
         </div>
       </div>
 

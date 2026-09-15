@@ -12,17 +12,29 @@ export default function ProductDetail() {
   } = useStore();
   const { products } = useProducts();
   const [currentImage, setCurrentImage] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const allImages = selectedProduct ? [selectedProduct.image, ...(selectedProduct.images || [])].filter(Boolean) : [];
 
   useEffect(() => {
     if (selectedProduct) {
       document.body.style.overflow = 'hidden';
+      window.history.pushState({ modal: 'product' }, '');
+      const handlePopState = () => setSelectedProduct(null);
+      window.addEventListener('popstate', handlePopState);
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('popstate', handlePopState);
+      };
     } else {
       document.body.style.overflow = '';
+      setCurrentImage(0);
+      setQuantity(1);
     }
-    return () => { document.body.style.overflow = ''; };
   }, [selectedProduct]);
-  const [quantity, setQuantity] = useState(1);
-  const allImages = selectedProduct ? [selectedProduct.image, ...(selectedProduct.images || [])].filter(Boolean) : [];
+
+  const handleClose = () => {
+    window.history.back();
+  };
 
   if (!selectedProduct) return null;
 
@@ -42,11 +54,11 @@ export default function ProductDetail() {
       {selectedProduct && (
         <>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={() => { setSelectedProduct(null); setCurrentImage(0); setQuantity(1); }}
+            onClick={handleClose}
             className="fixed inset-0 bg-black/70 z-50 backdrop-blur-sm" />
           <motion.div initial={{ opacity: 0, scale: 0.9, y: 50 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 50 }}
             className="fixed inset-2 sm:inset-4 md:inset-8 lg:inset-16 z-50 bg-midnight-dark rounded-2xl overflow-hidden border border-velvet/20 flex flex-col">
-            <button onClick={() => { setSelectedProduct(null); setCurrentImage(0); setQuantity(1); }}
+            <button onClick={handleClose}
               className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 p-2 glass-effect rounded-full hover:bg-velvet/20 transition-colors">
               <X size={18} className="text-soft-white" />
             </button>
