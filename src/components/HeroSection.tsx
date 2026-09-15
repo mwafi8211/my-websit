@@ -105,7 +105,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="mt-[clamp(1.4rem,4vw,2.2rem)] w-[min(96vw,600px)] mr-0 ml-auto">
+        <div className="mt-[clamp(2rem,6vw,3.2rem)] w-[min(96vw,600px)] mr-0 ml-auto">
           <TrustBadges />
         </div>
       </div>
