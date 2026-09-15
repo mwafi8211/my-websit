@@ -7,7 +7,7 @@ export default function HeroSection() {
   const { lang, setActivePage } = useStore();
 
   return (
-    <section className="relative min-h-fit flex items-start justify-center overflow-hidden pt-[clamp(7rem,16vw,10rem)] pb-[clamp(2rem,6vw,3rem)]">
+    <section className="relative min-h-screen flex items-start justify-center overflow-hidden pt-[clamp(19rem,32vw,25rem)] pb-[clamp(2rem,6vw,3rem)]">
       <div className="absolute inset-0">
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -87,12 +87,7 @@ export default function HeroSection() {
             : "Discover an exclusive collection designed to add magic to your married life"}
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-[clamp(0.6rem,2vw,1rem)]"
-        >
+        <div className="grid grid-cols-2 gap-[clamp(0.6rem,2vw,1rem)] w-[min(96vw,600px)] mx-auto">
           <motion.button
             whileHover={{
               scale: 1.05,
@@ -100,22 +95,20 @@ export default function HeroSection() {
             }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setActivePage("products")}
-            className="w-full sm:w-auto px-[clamp(2.6rem,7.5vw,4rem)] py-[clamp(1.4rem,4vw,1.8rem)] bg-gradient-to-r from-velvet to-velvet-light rounded-full text-white font-bold text-[clamp(1.15rem,3.2vw,1.4rem)] shadow-lg shadow-velvet/30"
+            className="flex flex-col items-center justify-center gap-1 py-[clamp(1rem,3vw,1.5rem)] bg-gradient-to-r from-velvet to-velvet-light rounded-[clamp(0.8rem,2.5vw,1.2rem)] text-white font-bold text-[clamp(0.85rem,2.3vw,1.1rem)] shadow-lg shadow-velvet/30"
           >
             {lang === "ar" ? "🛍️ تسوق الآن" : "🛍️ Shop Now"}
           </motion.button>
-        </motion.div>
-
-        <div className="mt-[clamp(1rem,3vw,1.8rem)] grid grid-cols-1 sm:grid-cols-2 gap-[clamp(0.6rem,2vw,1rem)] w-[min(96vw,600px)] mx-auto">
-          <div className="bg-midnight-light/30 border border-velvet/20 rounded-[clamp(0.8rem,2.5vw,1.2rem)] p-[clamp(0.6rem,2vw,1rem)]">
-            <HeartShippingBanner />
-          </div>
-          <div className="bg-midnight-light/30 border border-velvet/20 rounded-[clamp(0.8rem,2.5vw,1.2rem)] p-[clamp(0.6rem,2vw,1rem)] flex items-center justify-center gap-2">
+          <div className="bg-midnight-light/30 border border-velvet/20 rounded-[clamp(0.8rem,2.5vw,1.2rem)] p-[clamp(0.6rem,2vw,1rem)] flex flex-col items-center justify-center gap-1">
             <span className="text-[clamp(1.3rem,3.5vw,1.8rem)]">🚚</span>
             <span className="text-[clamp(0.75rem,2vw,0.95rem)] font-bold text-soft-white">
               {lang === "ar" ? "شحن مجاني" : "Free Shipping"}
             </span>
           </div>
+        </div>
+
+        <div className="mt-[clamp(0.6rem,2vw,1rem)] w-[min(96vw,600px)] mx-auto bg-midnight-light/30 border border-velvet/20 rounded-[clamp(0.8rem,2.5vw,1.2rem)] p-[clamp(0.6rem,2vw,1rem)]">
+          <HeartShippingBanner />
         </div>
       </div>
 
