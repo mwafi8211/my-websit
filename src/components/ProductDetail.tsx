@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingCart, Heart, Star, ChevronRight, ChevronLeft } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import { products } from '../data/products';
+import { useProducts } from '../hooks/useProducts';
 import ProductCard from './ProductCard';
 
 export default function ProductDetail() {
@@ -10,7 +10,17 @@ export default function ProductDetail() {
     lang, selectedProduct, setSelectedProduct,
     addToCart, addToWishlist, removeFromWishlist, isInWishlist, addFlyingHeart
   } = useStore();
+  const { products } = useProducts();
   const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    if (selectedProduct) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [selectedProduct]);
   const [quantity, setQuantity] = useState(1);
   const allImages = selectedProduct ? [selectedProduct.image, ...(selectedProduct.images || [])].filter(Boolean) : [];
 

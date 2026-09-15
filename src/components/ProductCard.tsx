@@ -29,7 +29,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
       transition={{ duration: 0.4, delay: index * 0.05 }} whileHover={{ y: -4 }}
       className="group relative bg-midnight-light/50 rounded-2xl overflow-hidden border border-velvet/10 hover:border-velvet/30 transition-all duration-500 cursor-pointer"
       onClick={() => setSelectedProduct(product)}>
-      <div className="relative aspect-square overflow-hidden">
+      <div className="relative aspect-[3/4] overflow-hidden">
         {!imageLoaded && <div className="absolute inset-0 bg-midnight-light animate-pulse" />}
         <img src={product.image} alt={lang === 'ar' ? product.name : product.nameEn}
           className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
@@ -65,39 +65,36 @@ export default function ProductCard({ product, index = 0 }: Props) {
           <Heart className="w-5 h-5 text-soft-white transition-transform" fill={inWishlist ? '#FF1493' : 'none'} strokeWidth={2} />
         </button>
 
-        {/* Add to cart - floating circular button, expands to show label on hover */}
-        <div className="absolute bottom-3 right-3 z-10">
-          <motion.button whileTap={{ scale: 0.9 }} onClick={handleAddToCart}
-            className="group/btn flex items-center gap-0 overflow-hidden h-11 rounded-full bg-gradient-to-r from-velvet to-velvet-light shadow-lg shadow-velvet/40 active:scale-95 transition-all duration-300 hover:pl-4">
-            <span className="max-w-0 group-hover/btn:max-w-[80px] overflow-hidden whitespace-nowrap transition-all duration-300 text-white text-[0.82rem] font-bold">
-              {lang === 'ar' ? 'أضف' : 'Add'}
-            </span>
-            <span className="w-11 h-11 flex items-center justify-center flex-shrink-0">
-              <ShoppingCart className="w-[1.2rem] h-[1.2rem] text-white" />
-            </span>
-          </motion.button>
-        </div>
       </div>
 
-      <div className="p-4 space-y-2">
-        <p className="text-[0.75rem] md:text-[0.82rem] text-velvet-light font-bold">
+      <div className="p-3 space-y-1">
+        <p className="text-[0.62rem] md:text-[0.68rem] text-velvet-light font-bold">
           {lang === 'ar' ? product.category : product.categoryEn}
         </p>
-        <h3 className="text-[0.95rem] md:text-[1.05rem] leading-5 font-bold text-soft-white line-clamp-1 group-hover:text-rose-gold transition-colors">
+        <h3 className="text-[0.8rem] md:text-[0.88rem] leading-4 font-bold text-soft-white line-clamp-1 group-hover:text-rose-gold transition-colors">
           {lang === 'ar' ? product.name : product.nameEn}
         </h3>
-        <div className="flex items-center gap-2">
-          <div className="flex gap-0.5">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className={`w-[1.08rem] h-[1.08rem] transition-all ${i < Math.floor(product.rating) ? 'text-gold fill-gold drop-shadow-[0_0_4px_rgba(255,20,147,0.6)]' : 'text-soft-white/20'}`} />
-            ))}
-          </div>
-          <span className="text-[0.94rem] md:text-[1rem] text-soft-white/45">({product.rating})</span>
-        </div>
         <div className="flex items-baseline gap-1">
-          <span className="text-[1.12rem] md:text-[1.22rem] font-extrabold text-rose-gold">{product.price}</span>
-          <span className="text-[0.72rem] md:text-[0.78rem] text-rose-gold/70">{lang === 'ar' ? 'ج.م' : 'EGP'}</span>
-          {product.oldPrice && <span className="text-[1.12rem] md:text-[1.22rem] font-bold text-soft-white/35 line-through mr-1.5">{product.oldPrice}</span>}
+          <span className="text-[0.95rem] md:text-[1.02rem] font-extrabold text-rose-gold">{product.price}</span>
+          <span className="text-[0.6rem] md:text-[0.65rem] text-rose-gold/70">{lang === 'ar' ? 'ج.م' : 'EGP'}</span>
+          {product.oldPrice && <span className="text-[0.95rem] md:text-[1.02rem] font-bold text-soft-white/35 line-through mr-1.5">{product.oldPrice}</span>}
+        </div>
+        <div className="flex gap-2 pt-1">
+          <motion.button whileTap={{ scale: 0.9 }} onClick={handleAddToCart}
+            className="flex-1 h-11 rounded-xl bg-gradient-to-r from-velvet to-velvet-light shadow-lg shadow-velvet/40 active:scale-95 transition-all duration-300 flex flex-col items-center justify-center gap-0.5">
+            <ShoppingCart className="w-[1.1rem] h-[1.1rem] text-white" />
+            <span className="text-white text-[0.6rem] font-bold leading-none">
+              {lang === 'ar' ? 'أضف' : 'Add'}
+            </span>
+          </motion.button>
+          <motion.button whileTap={{ scale: 0.9 }}
+            onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); }}
+            className="flex-1 h-11 rounded-xl glass-effect border border-velvet/20 active:scale-95 transition-all duration-300 flex flex-col items-center justify-center gap-0.5">
+            <span className="text-[1.1rem] leading-none">📖</span>
+            <span className="text-soft-white text-[0.6rem] font-bold leading-none">
+              {lang === 'ar' ? 'الوصف' : 'Desc'}
+            </span>
+          </motion.button>
         </div>
       </div>
     </motion.div>
