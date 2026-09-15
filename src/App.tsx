@@ -27,7 +27,9 @@ function HomePage() {
   return (
     <>
       <HeroSection />
-      <TrustBadges />
+      <div className="-mt-[clamp(9rem,22vw,15rem)] relative z-10">
+        <TrustBadges />
+      </div>
       <CategoriesSection />
       <FeaturedProducts />
       <StatsSection />

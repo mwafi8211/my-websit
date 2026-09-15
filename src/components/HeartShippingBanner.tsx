@@ -13,10 +13,10 @@ export default function HeartShippingBanner() {
   const isComplete = total >= freeShippingThreshold;
 
   return (
-    <div className="w-full bg-midnight-light/60 border-b border-velvet/15 backdrop-blur-sm">
-      <div className="px-[clamp(0.8rem,3vw,1.3rem)] py-[clamp(0.6rem,2vw,0.9rem)]">
-        <div className="flex items-center gap-[clamp(0.7rem,2.5vw,1.3rem)]">
-          <div className="relative w-[clamp(2.4rem,6.5vw,3.1rem)] h-[clamp(2.4rem,6.5vw,3.1rem)] flex-shrink-0">
+    <div className="w-full">
+      <div>
+        <div className="flex items-center gap-[clamp(0.5rem,2vw,0.9rem)]">
+          <div className="relative w-[clamp(1.8rem,5vw,2.4rem)] h-[clamp(1.8rem,5vw,2.4rem)] flex-shrink-0">
             <svg viewBox="0 0 24 24" className="w-full h-full">
               <defs>
                 <clipPath id="heartClipBanner">
@@ -50,13 +50,13 @@ export default function HeartShippingBanner() {
             <motion.p
               key={isComplete ? 'done' : remaining}
               initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }}
-              className={`text-[clamp(0.68rem,1.9vw,0.85rem)] font-extrabold leading-tight ${isComplete ? 'text-velvet-light' : 'text-soft-white'}`}
+              className={`text-[clamp(0.6rem,1.6vw,0.75rem)] font-extrabold leading-tight ${isComplete ? 'text-velvet-light' : 'text-soft-white'}`}
             >
               {isComplete
                 ? (lang === 'ar' ? '💖 قلبك اكتمل والشحن بقى علينا!' : '💖 Your heart is full — shipping is on us!')
                 : (lang === 'ar' ? `لسه ${remaining}ج وقلبك يكتمل والشحن يبقى علينا` : `${remaining} EGP left to complete your heart & get free shipping`)}
             </motion.p>
-            <div className="w-full h-[clamp(0.3rem,0.8vw,0.4rem)] bg-midnight-dark/60 rounded-full mt-[clamp(0.25rem,0.8vw,0.35rem)] overflow-hidden">
+            <div className="w-full h-[clamp(0.25rem,0.6vw,0.35rem)] bg-midnight-dark/60 rounded-full mt-[clamp(0.2rem,0.6vw,0.3rem)] overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
                 style={{ background: 'linear-gradient(90deg, #EC008C, #FF1493)', boxShadow: '0 0 8px rgba(255,20,147,0.6)' }}

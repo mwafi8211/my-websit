@@ -95,8 +95,8 @@ export default function ProductDetail() {
                     {selectedProduct.oldPrice && <span className="text-lg text-soft-white/30 line-through">{selectedProduct.oldPrice} {lang === 'ar' ? 'ج.م' : 'EGP'}</span>}
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-soft-white/70 mb-2">{lang === 'ar' ? 'الوصف' : 'Description'}</h4>
-                    <p className="text-soft-white/50 text-sm leading-relaxed">{lang === 'ar' ? selectedProduct.description : selectedProduct.descriptionEn}</p>
+                    <h4 className="text-base font-bold text-soft-white/70 mb-2">{lang === 'ar' ? 'الوصف' : 'Description'}</h4>
+                    <p className="text-white text-lg leading-relaxed">{lang === 'ar' ? selectedProduct.description : selectedProduct.descriptionEn}</p>
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="text-soft-white/60 text-sm">{lang === 'ar' ? 'الكمية' : 'Quantity'}</span>
@@ -118,8 +118,8 @@ export default function ProductDetail() {
                     </motion.button>
                   </div>
                   <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-4 border-t border-velvet/10">
-                    <div className="text-center p-2 sm:p-3 bg-midnight-light/30 rounded-xl"><p className="text-lg sm:text-xl mb-1">📦</p><p className="text-[10px] sm:text-xs text-soft-white/40">{lang === 'ar' ? 'شحن سري' : 'Discreet Shipping'}</p></div>
-                    <div className="text-center p-2 sm:p-3 bg-midnight-light/30 rounded-xl"><p className="text-lg sm:text-xl mb-1">✅</p><p className="text-[10px] sm:text-xs text-soft-white/40">{lang === 'ar' ? 'ضمان الجودة' : 'Quality Guarantee'}</p></div>
+                    <div className="text-center p-2 sm:p-3 bg-midnight-light/30 rounded-xl"><p className="text-3xl sm:text-4xl mb-1">📦</p><p className="text-xs sm:text-sm text-soft-white/40">{lang === 'ar' ? 'شحن سري' : 'Discreet Shipping'}</p></div>
+                    <div className="text-center p-2 sm:p-3 bg-midnight-light/30 rounded-xl"><p className="text-3xl sm:text-4xl mb-1">✅</p><p className="text-xs sm:text-sm text-soft-white/40">{lang === 'ar' ? 'ضمان الجودة' : 'Quality Guarantee'}</p></div>
                   </div>
                 </div>
               </div>

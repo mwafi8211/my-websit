@@ -7,7 +7,7 @@ export default function HeroSection() {
   const { lang, setActivePage } = useStore();
 
   return (
-    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-[clamp(3rem,7vw,4.5rem)]">
+    <section className="relative min-h-fit flex items-start justify-center overflow-hidden pt-[clamp(7rem,16vw,10rem)] pb-[clamp(2rem,6vw,3rem)]">
       <div className="absolute inset-0">
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -104,18 +104,18 @@ export default function HeroSection() {
           >
             {lang === "ar" ? "🛍️ تسوق الآن" : "🛍️ Shop Now"}
           </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setActivePage("products")}
-            className="w-full sm:w-auto px-[clamp(2.6rem,7.5vw,4rem)] py-[clamp(1.4rem,4vw,1.8rem)] border border-rose-gold/40 rounded-full text-rose-gold hover:bg-rose-gold/10 font-medium text-[clamp(1.15rem,3.2vw,1.4rem)] transition-all"
-          >
-            {lang === "ar" ? "🎁 العروض" : "🎁 Offers"}
-          </motion.button>
         </motion.div>
 
-        <div className="mt-[clamp(1rem,3vw,1.8rem)]">
-          <HeartShippingBanner />
+        <div className="mt-[clamp(1rem,3vw,1.8rem)] grid grid-cols-1 sm:grid-cols-2 gap-[clamp(0.6rem,2vw,1rem)] w-[min(96vw,600px)] mx-auto">
+          <div className="bg-midnight-light/30 border border-velvet/20 rounded-[clamp(0.8rem,2.5vw,1.2rem)] p-[clamp(0.6rem,2vw,1rem)]">
+            <HeartShippingBanner />
+          </div>
+          <div className="bg-midnight-light/30 border border-velvet/20 rounded-[clamp(0.8rem,2.5vw,1.2rem)] p-[clamp(0.6rem,2vw,1rem)] flex items-center justify-center gap-2">
+            <span className="text-[clamp(1.3rem,3.5vw,1.8rem)]">🚚</span>
+            <span className="text-[clamp(0.75rem,2vw,0.95rem)] font-bold text-soft-white">
+              {lang === "ar" ? "شحن مجاني" : "Free Shipping"}
+            </span>
+          </div>
         </div>
       </div>
 

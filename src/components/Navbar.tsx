@@ -110,22 +110,27 @@ export default function Navbar() {
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden glass-effect border-t border-velvet/20 min-[640px]:hidden">
-            <div className="fluid-wrap py-[clamp(0.5rem,2vw,1rem)] space-y-[clamp(0.2rem,0.8vw,0.4rem)]">
-              {navItems.map(item => (
-                <button key={item.id} onClick={() => { setActivePage(item.id); setMobileMenuOpen(false); }}
-                  className={`block w-full text-right px-[clamp(0.6rem,2vw,1rem)] py-[clamp(0.5rem,1.5vw,0.7rem)] rounded-lg transition-colors text-[clamp(0.75rem,2vw,0.95rem)] ${
-                    activePage === item.id ? 'bg-velvet/20 text-rose-gold' : 'text-soft-white/70 hover:bg-velvet/10'}`}>
-                  {item.label}
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/60 z-40 min-[640px]:hidden" />
+            <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'tween', duration: 0.3 }}
+              className="fixed top-0 right-0 h-full w-[70%] max-w-[280px] glass-effect border-l border-velvet/20 z-50 min-[640px]:hidden overflow-y-auto">
+              <div className="px-[clamp(0.8rem,3vw,1.2rem)] py-[clamp(1.2rem,4vw,1.8rem)] space-y-[clamp(0.3rem,1vw,0.5rem)] mt-[clamp(3rem,7vw,4.5rem)]">
+                {navItems.map(item => (
+                  <button key={item.id} onClick={() => { setActivePage(item.id); setMobileMenuOpen(false); }}
+                    className={`block w-full text-right px-[clamp(0.6rem,2vw,1rem)] py-[clamp(0.5rem,1.5vw,0.7rem)] rounded-lg transition-colors text-[clamp(0.95rem,2.6vw,1.2rem)] font-semibold ${
+                      activePage === item.id ? 'bg-velvet/20 text-rose-gold' : 'text-soft-white/70 hover:bg-velvet/10'}`}>
+                    {item.label}
+                  </button>
+                ))}
+                <button onClick={() => { setShowOrderTracking(true); setMobileMenuOpen(false); }}
+                  className="block w-full text-right px-[clamp(0.6rem,2vw,1rem)] py-[clamp(0.5rem,1.5vw,0.7rem)] rounded-lg text-soft-white/70 hover:bg-velvet/10 transition-colors text-[clamp(0.75rem,2vw,0.95rem)]">
+                  {lang === 'ar' ? '📦 تتبع الطلب' : '📦 Track Order'}
                 </button>
-              ))}
-              <button onClick={() => { setShowOrderTracking(true); setMobileMenuOpen(false); }}
-                className="block w-full text-right px-[clamp(0.6rem,2vw,1rem)] py-[clamp(0.5rem,1.5vw,0.7rem)] rounded-lg text-soft-white/70 hover:bg-velvet/10 transition-colors text-[clamp(0.75rem,2vw,0.95rem)]">
-                {lang === 'ar' ? '📦 تتبع الطلب' : '📦 Track Order'}
-              </button>
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </nav>
