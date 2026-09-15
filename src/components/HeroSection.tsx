@@ -7,7 +7,7 @@ export default function HeroSection() {
   const { lang, setActivePage } = useStore();
 
   return (
-    <section className="relative min-h-screen flex items-start justify-end overflow-hidden pt-[clamp(15rem,18vw,17rem)] pb-[clamp(2rem,6vw,3rem)]">
+    <section className="relative min-h-screen flex items-start justify-end overflow-hidden pt-[clamp(13rem,16vw,15rem)] pb-[clamp(2rem,6vw,3rem)]">
       <div className="absolute inset-0">
         <div
           className="absolute inset-0 bg-cover bg-center"
