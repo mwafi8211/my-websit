@@ -81,7 +81,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-[clamp(0.65rem,1.8vw,0.9rem)] text-soft-white/50 mb-[clamp(1.2rem,4vw,2.2rem)] max-w-[min(90%,550px)] mr-0 ml-auto"
+          className="text-[clamp(0.65rem,1.8vw,0.9rem)] text-white mb-[clamp(1.2rem,4vw,2.2rem)] max-w-[min(90%,550px)] mr-0 ml-auto"
         >
           {lang === "ar"
             ? "اكتشف مجموعة حصرية من المنتجات المصممة خصيصاً لإضافة لمسة سحرية على حياتكم الزوجية"
