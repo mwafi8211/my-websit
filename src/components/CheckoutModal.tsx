@@ -53,7 +53,7 @@ export default function CheckoutModal() {
     clearCart(); clearDiscount(); setOrderPlaced(true);
   };
 
-  const handleClose = () => { setShowCheckout(false); setOrderPlaced(false); setOrderId(''); setAddress(''); setGovernorate(''); setCouponInput(''); setCouponError(''); setTransferImage(null); setTransferImageFile(null); };
+  const handleClose = () => { clearDiscount(); setShowCheckout(false); setOrderPlaced(false); setOrderId(''); setAddress(''); setGovernorate(''); setCouponInput(''); setCouponError(''); setTransferImage(null); setTransferImageFile(null); };
   const canPlaceOrder = address && governorate && (paymentMethod === 'cod' || (paymentMethod === 'wallet' && transferImage)) && !(joinLuckyDraw && total < luckyDrawMinOrder);
 
   return (
